@@ -1,12 +1,7 @@
-#include "IRenderer.hpp"
+#include "Interface.hpp"
 
-IRenderer::IRenderer(BackendType backend, FrameworkType framework)
-{
-    this->Backend = backend;
-    this->Framework = framework;
-}
 
-bool IRenderer::Initialize()
+bool akairo::Renderer::Interface::Initialize()
 {
     if (this->Backend == UndefinedBackend) return false;
 
@@ -15,6 +10,7 @@ bool IRenderer::Initialize()
     switch (this->Framework)
     {
     case ImGUI:  this->InitializeImGUI();
+    default: ;
     }
 
 

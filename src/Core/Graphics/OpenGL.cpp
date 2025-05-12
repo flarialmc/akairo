@@ -1,7 +1,11 @@
 
 #include "OpenGL.hpp"
 
-bool Graphics::OpenGL::Initialize()
+// TODO:
+// in the future, after talking with White
+// i should try to add EGLSuraface, etc. Android specific, Windows specific, etc.
+akairo::Graphics::OpenGL::OpenGL(int Width, int Height)
 {
-    return true;
+    this->Width = Width;
+    this->Height = Height;
 }

@@ -1,13 +1,15 @@
 #pragma once
 
-namespace Graphics {
+namespace akairo::Graphics {
 
     class IGraphicsHandler {
     public:
         virtual ~IGraphicsHandler() = default;
-        virtual bool Initialize() = 0;
+        virtual bool Initialize(void* wnd) = 0;
         virtual void Shutdown() = 0;
-        virtual void Resize() = 0;
+        virtual void Resize(int Width, int Height) = 0;
+        int Width{};
+        int Height{};
     };
 
 }
