@@ -10,10 +10,12 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 
 file(GLOB_RECURSE AKAIRO_SOURCES
         "src/**/*.cpp"
+        "src/*.cpp"
 )
 
 file(GLOB_RECURSE AKAIRO_HEADERS
         "src/**/*.hpp"
+        "src/*.hpp"
 )
 
 message(STATUS "Collected source files: ${AKAIRO_HEADERS}")

@@ -25,9 +25,6 @@ namespace akairo::Renderer {
 
     class Interface {
     public:
-
-
-    public:
         BackendType backend = OpenGL;
 
         Interface(BackendType backend) {
@@ -35,12 +32,5 @@ namespace akairo::Renderer {
           }
 
         bool Initialize();
-
-    private:
-        //ImGui Initializations
-        bool InitializeImGUI();
-        bool InitializeImGUIOpenGL();
-        bool InitializeImGUIDx11();
-
     };
 }

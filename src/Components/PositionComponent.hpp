@@ -11,6 +11,7 @@ class PositionComponent
 
     PositionComponent(Vec2 Position, BoundingRect ParentRect)
     {
+
         PositionConstraints = Position;
 
         Vec2 Constraint = Vec2(Position.x, Position.y)/100.f;
