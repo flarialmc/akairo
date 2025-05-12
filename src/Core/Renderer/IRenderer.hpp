@@ -1,14 +1,16 @@
 #pragma once
 
-class Renderer {
+class IRenderer {
 public:
-    enum Backends {
+    enum BackendType {
+
       UndefinedBackend,
-      DIRECTX11,
-      OPENGL
+      DirectX11,
+      OpenGL
+
    };
 
-    enum Frameworks
+    enum FrameworkType
    {
        UndefinedFramework,
        ImGUI,
@@ -22,10 +24,10 @@ public:
     };
 
 public:
-    Backends Backend = OPENGL;
-    Frameworks Framework = ImGUI;
+    BackendType Backend = OpenGL;
+    FrameworkType Framework = ImGUI;
 
-    Renderer(Backends backend, Frameworks framework);
+    IRenderer(BackendType backend, FrameworkType framework);
 
     bool Initialize();
 
