@@ -4,5 +4,12 @@ akairo::Renderer::ImGui::ImGui(BackendType backend, int Width, int Height): Inte
     this->OpenGL = std::make_unique<Graphics::OpenGL>(Width, Height);
     this->context = ::ImGui::CreateContext();
     this->io = &::ImGui::GetIO();
-    ImGui_ImplOpenGL3_Init("#version 300 es");
+    this->backend = backend;
+
+    switch (backend)
+    {
+        case OpenGL:{ ImGui_ImplOpenGL3_Init("#version 300 es"); }
+        default: {}
+    }
+
 }

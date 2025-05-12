@@ -3,9 +3,7 @@
 
 bool akairo::Renderer::Interface::Initialize()
 {
-    if (this->Backend == UndefinedBackend) return false;
-
-    if (this->Framework == UndefinedFramework) return false;
+    if (this->backend == UndefinedBackend) return false;
 
     return true;
 }
