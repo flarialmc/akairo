@@ -3,13 +3,14 @@
 #include "../Utils/Vectors.hpp"
 #include "../Utils/BoundingRect.hpp"
 
-class PositionComponent
+namespace akairo::Components {
+class Position
 {
     Vec2 PositionConstraints; //Position Constraints (eg Vec2(50, 60) => 50% from left and 60% from top
     Vec2 RelativePosition; //Position Relative to the Parent Rect (In Pixels)
     Vec2 ProperPosition; //RelativePosition + ParentRect Position
 
-    PositionComponent(Vec2 Position, BoundingRect ParentRect)
+    Position(Vec2 Position, BoundingRect ParentRect)
     {
 
         PositionConstraints = Position;
@@ -21,3 +22,4 @@ class PositionComponent
         ProperPosition = RelativePosition + ParentRect.TopLeft;
     }
 };
+}
