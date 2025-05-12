@@ -31,10 +31,9 @@ namespace akairo::Renderer {
         BackendType Backend = OpenGL;
         FrameworkType Framework = ImGUI;
 
-        Interface(akairo::Renderer::BackendType backend, akairo::Renderer::FrameworkType framework) {
+        Interface(BackendType backend) {
             this->Backend = backend;
-            this->Framework = framework;
-          };
+          }
 
         bool Initialize();
 

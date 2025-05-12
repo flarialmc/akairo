@@ -7,12 +7,5 @@ bool akairo::Renderer::Interface::Initialize()
 
     if (this->Framework == UndefinedFramework) return false;
 
-    switch (this->Framework)
-    {
-    case ImGUI:  this->InitializeImGUI();
-    default: ;
-    }
-
-
     return true;
 }
