@@ -1,15 +1,13 @@
 #pragma once
-#include "IGraphicsHandler.hpp"
-#include <backends/imgui_impl_android.h>
-#include <gl/GL.h>
-
+#include "Interface.hpp"
 
 namespace akairo::Graphics {
-    class OpenGL : public IGraphicsHandler {
+    class OpenGL : public Interface {
      public:
        OpenGL(int Width, int Height);
        ~OpenGL() override;
-        bool Initialize(int Width, int Height);
+        bool Initialize(int Width, int Height) override;
         void Resize(int Width, int Height) override;
+        void Shutdown() override;
     };
 };

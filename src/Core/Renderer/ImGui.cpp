@@ -8,7 +8,7 @@ akairo::Renderer::ImGui::ImGui(BackendType backend, int Width, int Height): Inte
 
     switch (backend)
     {
-        case OpenGL:{ ImGui_ImplOpenGL3_Init("#version 300 es"); }
+        case BackendType::OpenGL:{ ImGui_ImplOpenGL3_Init("#version 300 es"); }
         default: {}
     }
 

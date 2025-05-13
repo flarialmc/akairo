@@ -2,7 +2,7 @@
 #include "Interface.hpp"
 #include <imgui.h>
 #include <memory>
-#include <Core/Graphics/IGraphicsHandler.hpp>
+#include <Core/Graphics/Interface.hpp>
 #include <Core/Graphics/OpenGL.hpp>
 #include <backends/imgui_impl_opengl3.h>
 

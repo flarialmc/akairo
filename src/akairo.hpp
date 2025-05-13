@@ -5,9 +5,6 @@
 
 
 
-#pragma comment(lib, "opengl32.lib")
-
-
 namespace akairo {
 
     static std::unordered_map<std::string, Renderer::Interface*> renderers;
