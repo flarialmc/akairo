@@ -30,6 +30,7 @@ namespace akairo::Renderer {
 
     class Interface {
     public:
+        virtual ~Interface() = default;
         BackendType backendType = OpenGL;
         std::unique_ptr<Graphics::Interface> backend{};
 
@@ -41,4 +42,6 @@ namespace akairo::Renderer {
 
         virtual void DrawRectangle(Components::Position pos) const;
     };
+
+
 }

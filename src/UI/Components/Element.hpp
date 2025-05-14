@@ -23,7 +23,7 @@ namespace akairo::Components
         Element(std::string name, std::unique_ptr<Renderer::Interface> renderer)
             : name(std::move(name)), renderer(std::move(renderer)) {}
 
-    private:
+
         std::string name;
         std::unique_ptr<Element> parent = nullptr;
         std::vector<std::unique_ptr<Element>> children;

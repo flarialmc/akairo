@@ -7,8 +7,8 @@
 
 namespace akairo {
 
-    static std::unordered_map<std::string, Renderer::Interface*> renderers;
+    static std::unordered_map<std::string, std::unique_ptr<Renderer::Interface>> renderers;
     static bool CreateRenderer(const std::string& name, Renderer::BackendType backend, Renderer::FrameworkType framework, int Width, int Height);
 
-    static Renderer::Interface* GetRenderer(const std::string& name);
+    static std::unique_ptr<Renderer::Interface> GetRenderer(const std::string& name);
 };
