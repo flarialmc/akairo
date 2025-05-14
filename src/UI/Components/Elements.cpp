@@ -21,4 +21,9 @@ void akairo::Components::Element::Update()
 
     this->position.Parentize(ParentBounds);
     this->size.Parentize(ParentBounds);
+
+    for (auto& child : children)
+    {
+        child->Update();
+    }
 }
