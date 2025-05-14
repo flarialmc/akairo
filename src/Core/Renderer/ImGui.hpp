@@ -1,11 +1,9 @@
 #pragma once
 #include <imgui.h>
 #include <memory>
-#include <Core/Graphics/OpenGL.hpp>
-#include <backends/imgui_impl_opengl3.h>
-
+#include "Core/Graphics/OpenGL.hpp"
 #include "Interface.hpp"
-
+#include <backends/imgui_impl_opengl3.h>
 namespace akairo::Renderer {
 
     class ImGui final : public Interface {

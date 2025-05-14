@@ -1,8 +1,6 @@
 #pragma once
 #include <memory>
 #include <Core/Graphics/OpenGL.hpp>
-
-#include "Element.hpp"
 #include "Position.hpp"
 
 namespace akairo::Renderer {
@@ -41,7 +39,6 @@ namespace akairo::Renderer {
         [[nodiscard]] bool Initialize() const;
 
         virtual void DrawRectangle(Components::Position pos) const;
+        void CreateElement()
     };
-
-
 }
