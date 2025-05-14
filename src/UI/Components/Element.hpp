@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 
+#include "Size.hpp"
 #include "../../Core/Renderer/ImGui.hpp"
 
 /*
