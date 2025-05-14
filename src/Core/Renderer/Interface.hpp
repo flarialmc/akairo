@@ -2,8 +2,8 @@
 #include <memory>
 #include <Core/Graphics/OpenGL.hpp>
 
-#include "Element.hpp"
-#include "Position.hpp"
+#include "../../UI/Element.hpp"
+#include "Position/Position.hpp"
 
 namespace akairo::Renderer {
 

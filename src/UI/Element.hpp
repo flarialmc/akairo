@@ -3,8 +3,13 @@
 #include <vector>
 #include <string>
 
-#include "Size.hpp"
-#include "../../Core/Renderer/ImGui.hpp"
+#include "Components/Size/Size.hpp"
+#include "Components/Position/Position.hpp"
+
+namespace akairo::Renderer
+{
+    class Interface;
+}
 
 /*
  * Each element is given a name.
@@ -28,6 +33,8 @@ namespace akairo::Components
         void RemoveChild(std::unique_ptr<Element> child); //Removes child
         void Parentize(std::unique_ptr<Element> Parent); //Changes the parent or adds the parent to this element
         void Update();
+
+        std::unique_ptr<Renderer::Interface> GetRenderer();
 
     private:
         std::string name;
