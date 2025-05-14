@@ -2,6 +2,9 @@
 #include <memory>
 #include <Core/Graphics/OpenGL.hpp>
 
+#include "Element.hpp"
+#include "Position.hpp"
+
 namespace akairo::Renderer {
 
     enum BackendType {
@@ -34,6 +37,8 @@ namespace akairo::Renderer {
             this->backendType = backend;
           }
 
-        bool Initialize() const;
+        [[nodiscard]] bool Initialize() const;
+
+        virtual void DrawRectangle(Components::Position pos) const;
     };
 }

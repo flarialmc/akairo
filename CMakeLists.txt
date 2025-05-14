@@ -15,10 +15,9 @@ file(GLOB_RECURSE AKAIRO_SOURCES
         "src/*.hpp"
 )
 
-message(STATUS "Collected source files: ${AKAIRO_HEADERS}")
-
 add_library(akairo STATIC ${AKAIRO_SOURCES})
 
+# a function to get all header files recursively
 function(get_all_subdirs base_dir result)
     file(GLOB_RECURSE subdirs LIST_DIRECTORIES true "${base_dir}/*")
     set(dir_list "")
@@ -33,7 +32,7 @@ endfunction()
 get_all_subdirs("${CMAKE_CURRENT_SOURCE_DIR}/src" ALL_SRC_DIRS)
 
 target_include_directories(akairo PRIVATE ${ALL_SRC_DIRS})
-
+# end
 
 
 # Fetch ImGui
