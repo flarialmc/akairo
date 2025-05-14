@@ -11,18 +11,29 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 file(GLOB_RECURSE AKAIRO_SOURCES
         "src/**/*.cpp"
         "src/*.cpp"
-)
-
-file(GLOB_RECURSE AKAIRO_HEADERS
         "src/**/*.hpp"
         "src/*.hpp"
 )
 
 message(STATUS "Collected source files: ${AKAIRO_HEADERS}")
 
-add_library(akairo STATIC ${AKAIRO_SOURCES}
-        src/akairo.hpp)
-target_include_directories(akairo PRIVATE "src")
+add_library(akairo STATIC ${AKAIRO_SOURCES})
+
+function(get_all_subdirs base_dir result)
+    file(GLOB_RECURSE subdirs LIST_DIRECTORIES true "${base_dir}/*")
+    set(dir_list "")
+    foreach(subdir ${subdirs})
+        if(IS_DIRECTORY ${subdir})
+            list(APPEND dir_list ${subdir})
+        endif()
+    endforeach()
+    set(${result} "${dir_list}" PARENT_SCOPE)
+endfunction()
+
+get_all_subdirs("${CMAKE_CURRENT_SOURCE_DIR}/src" ALL_SRC_DIRS)
+
+target_include_directories(akairo PRIVATE ${ALL_SRC_DIRS})
+
 
 
 # Fetch ImGui

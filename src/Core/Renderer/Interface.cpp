@@ -1,9 +1,9 @@
 #include "Interface.hpp"
 
 
-bool akairo::Renderer::Interface::Initialize()
+bool akairo::Renderer::Interface::Initialize() const
 {
-    if (this->backend == UndefinedBackend) return false;
+    if (this->backendType == UndefinedBackend) return false;
 
     return true;
 }

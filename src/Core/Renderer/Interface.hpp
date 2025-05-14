@@ -1,4 +1,6 @@
 #pragma once
+#include <memory>
+#include <Core/Graphics/OpenGL.hpp>
 
 namespace akairo::Renderer {
 
@@ -19,18 +21,19 @@ namespace akairo::Renderer {
 
     enum OSType
     {
-        Andorid,
+        Android,
         Windows
     };
 
     class Interface {
     public:
-        BackendType backend = OpenGL;
+        BackendType backendType = OpenGL;
+        std::unique_ptr<Graphics::Interface> backend{};
 
-        Interface(BackendType backend) {
-            this->backend = backend;
+        explicit Interface(BackendType backend) {
+            this->backendType = backend;
           }
 
-        bool Initialize();
+        bool Initialize() const;
     };
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "../Components/PositionComponent.hpp"
+#include "../UI/Components/Position.hpp"
 
 class Element
 {
