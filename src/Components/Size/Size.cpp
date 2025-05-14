@@ -18,6 +18,15 @@ akairo::Components::Size::Size(Vec2 Size, BoundingRect ParentRect, bool WidthDep
     }
 }
 
+akairo::Components::Size::Size()
+{
+    this->WidthDependsOnHeight = false;
+    this->ProperSize = Vec2();
+    this->SizeConstraints = Vec2();
+    this->Parent = BoundingRect();
+}
+
+
 void akairo::Components::Size::Parentize(BoundingRect ParentRect)
 {
     this->Parent = ParentRect;

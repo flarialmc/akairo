@@ -12,6 +12,15 @@ akairo::Components::Position::Position(Vec2 Position, BoundingRect ParentRect)
     ProperPosition = RelativePosition + ParentRect.TopLeft;
 }
 
+akairo::Components::Position::Position()
+{
+    this->RelativePosition = Vec2();
+    this->ProperPosition = Vec2();
+    this->RelativePosition = Vec2();
+    this->Parent = BoundingRect();
+}
+
+
 void akairo::Components::Position::Parentize(BoundingRect ParentRect)
 {
     this->Parent = ParentRect;
