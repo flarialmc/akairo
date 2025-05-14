@@ -1,4 +1,5 @@
 #include "Rectangle.hpp"
+#include "Renderer/Interface.hpp"
 
 namespace akairo::Shapes {
     Rectangle::Rectangle(const Components::Position& position,
@@ -8,8 +9,9 @@ namespace akairo::Shapes {
     }
 
     void Rectangle::Draw() {
-        if (renderer) {
-            renderer->DrawRectangle(position); // Add size later
+        auto Renderer = GetRenderer();
+        if (Renderer) {
+            Renderer->DrawRectangle(position); // Add size later
         }
     }
 

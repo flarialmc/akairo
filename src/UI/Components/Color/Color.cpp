@@ -15,3 +15,8 @@ akairo::Components::Color::Color(int r, int g, int b, int a)
     this->b = b / 255;
     this->a = a / 255;
 }
+
+akairo::Components::Color::Color()
+{
+    this->r = this->g = this->b = this->a = 0;
+}

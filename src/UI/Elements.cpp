@@ -27,3 +27,8 @@ void akairo::Components::Element::Update()
         child->Update();
     }
 }
+
+std::unique_ptr<akairo::Renderer::Interface> akairo::Components::Element::GetRenderer()
+{
+    return std::move(renderer);
+}

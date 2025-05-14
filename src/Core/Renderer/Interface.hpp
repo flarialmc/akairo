@@ -2,7 +2,9 @@
 #include <memory>
 #include <unordered_map>
 #include <Core/Graphics/OpenGL.hpp>
-#include "Position.hpp"
+
+#include "../../UI/Element.hpp"
+#include "../UI/Components/Position/Position.hpp"
 
 namespace akairo::Components
 {
