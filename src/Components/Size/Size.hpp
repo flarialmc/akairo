@@ -13,6 +13,7 @@ namespace akairo::Components {
         Vec2 ProperSize; //Size In Pixels
 
         Size(Vec2 Size, BoundingRect ParentRect, bool WidthDependsOnHeight = false);
+        Size();
         void Parentize(BoundingRect ParentRect);
         void Update();
         void Update(Vec2 Size);
