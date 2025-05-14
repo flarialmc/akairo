@@ -1,4 +1,6 @@
 #include "akairo.hpp"
+
+#include "Rectangle.hpp"
 #include "Core/Renderer/ImGui.hpp"
 
 bool akairo::CreateRenderer(const std::string& name, Renderer::BackendType backend, Renderer::FrameworkType framework, int Width, int Height) {
@@ -9,6 +11,18 @@ bool akairo::CreateRenderer(const std::string& name, Renderer::BackendType backe
   case Renderer::FrameworkType::ImGUI:
     {
       renderers[name] = std::make_unique<Renderer::ImGui>(Renderer::OpenGL, Width, Height);
+
+      /*
+       * This is a test to see if the renderer is working.
+       * It will create a rectangle and draw it.
+       */
+
+
+      /*
+      auto rect = renderers[name]->CreateElement<Shapes::Rectangle>(
+        "base rectangle", Components::Position(0.5f, {}));
+      rect->Draw();
+      */
     }
     case Renderer::FrameworkType::D2D: break;//renderers[name] = new OpenGL(backend);
     case Renderer::FrameworkType::UndefinedFramework: ;

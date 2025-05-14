@@ -27,9 +27,9 @@ namespace akairo::Components
         void AddChild(std::unique_ptr<Element> child); //Adds child to the list
         void RemoveChild(std::unique_ptr<Element> child); //Removes child
         void Parentize(std::unique_ptr<Element> Parent); //Changes the parent or adds the parent to this element
-        void Update();
+        virtual void Update();
+        virtual void Draw() = 0; // Draws the element
 
-    private:
         std::string name;
         std::unique_ptr<Element> parent = nullptr;
         std::vector<std::unique_ptr<Element>> children;
