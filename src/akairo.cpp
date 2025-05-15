@@ -1,6 +1,5 @@
 #include "akairo.hpp"
 
-#include "Rectangle.hpp"
 #include "Core/Renderer/ImGui.hpp"
 
 bool akairo::CreateRenderer(const std::string& name, Renderer::BackendType backend, Renderer::FrameworkType framework, int Width, int Height) {

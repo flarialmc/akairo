@@ -1,11 +1,13 @@
 #pragma once
 #include <utility>
 
-#include "Element.hpp"
-#include "Color/Color.hpp"
+#include "Core/Renderer/Interface.hpp"
+#include "UI/Element.hpp"
+#include "UI/Components/Color/Color.hpp"
+
 
 namespace akairo::Shapes {
-    class Shape : public Components::Element {
+    class Shape : public akairo::Element {
     public:
 
         Components::Position position;

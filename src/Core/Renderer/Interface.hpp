@@ -1,12 +1,12 @@
 #pragma once
 #include <memory>
+#include <string>
 #include <unordered_map>
 #include <Core/Graphics/OpenGL.hpp>
+#include "UI/Components/Position/Position.hpp"
+#include "UI/Element.hpp"
 
-#include "../../UI/Element.hpp"
-#include "../UI/Components/Position/Position.hpp"
-
-namespace akairo::Components
+namespace akairo
 {
     class Element;
 }
@@ -51,7 +51,7 @@ namespace akairo::Renderer {
          * There could be D2D.. ImGUI.. Pure OpenGL.. or even DirectX11.
          */
         virtual void DrawRectangle(Components::Position pos) const;
-        std::unordered_map<std::string, std::unique_ptr<Components::Element>> elements;
+        std::unordered_map<std::string, std::unique_ptr<Element>> elements;
 
 
         /*
@@ -68,6 +68,7 @@ namespace akairo::Renderer {
             auto element = std::make_unique<T>(std::forward<Args>(args)..., name, this);
             T* elementPtr = element.get();
             elements[name] = std::move(element);
+
             return elementPtr;
         }
 
@@ -75,9 +76,10 @@ namespace akairo::Renderer {
          * Get and modify any element you want,
          * Especially one you didn't store yourself, for some reason.
          */
-        Components::Element* GetElement(const std::string& name) {
+        Element* GetElement(const std::string& name) {
             auto it = elements.find(name);
             if (it != elements.end()) {
+
                 return it->second.get();
             }
             return nullptr;

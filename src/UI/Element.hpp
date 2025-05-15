@@ -4,12 +4,7 @@
 #include <string>
 
 #include "Components/Size/Size.hpp"
-#include "Components/Position/Position.hpp"
-
-namespace akairo::Renderer
-{
-    class Interface;
-}
+#include "Core/Renderer/Interface.hpp"
 
 /*
  * Each element is given a name.
@@ -20,8 +15,13 @@ namespace akairo::Renderer
  * There may be changes in the future.
  */
 
-namespace akairo::Components
+namespace akairo
 {
+    namespace Renderer
+    {
+        class Interface;
+    }
+
     class Element
     {
     public:
@@ -43,7 +43,7 @@ namespace akairo::Components
         std::vector<std::unique_ptr<Element>> children;
         std::unique_ptr<Renderer::Interface> renderer;
 
-        Position position;
-        Size size;
+        Components::Position position;
+        Components::Size size;
     };
 }

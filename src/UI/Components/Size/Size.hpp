@@ -1,6 +1,5 @@
 #pragma once
-#include "../../Utils/Vectors.hpp"
-#include "../../Utils/BoundingRect.hpp"
+#include "Utils/BoundingRect.hpp"
 
 namespace akairo::Components {
     class Size

@@ -8,7 +8,6 @@ namespace akairo::Renderer {
 
     class ImGui final : public Interface {
         ImGuiContext* context{};
-        ImGuiIO& io;
         ImDrawList* list{};
         std::unique_ptr<Graphics::OpenGL> OpenGL;
 

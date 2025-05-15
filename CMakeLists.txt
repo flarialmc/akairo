@@ -4,36 +4,23 @@ project(akairo VERSION 0.1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
-# Include directories
-include_directories(${PROJECT_SOURCE_DIR}/src)
-
-file(GLOB_RECURSE AKAIRO_SOURCES
-        "src/**/*.cpp"
-        "src/*.cpp"
-        "src/**/*.hpp"
-        "src/*.hpp"
+# Find all source files
+file(GLOB_RECURSE SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
 )
 
-add_library(akairo STATIC ${AKAIRO_SOURCES})
+# Find all header files
+file(GLOB_RECURSE HEADERS
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp"
+)
 
-# a function to get all header files recursively
-function(get_all_subdirs base_dir result)
-    file(GLOB_RECURSE subdirs LIST_DIRECTORIES true "${base_dir}/*")
-    set(dir_list "")
-    foreach(subdir ${subdirs})
-        if(IS_DIRECTORY ${subdir})
-            list(APPEND dir_list ${subdir})
-        endif()
-    endforeach()
-    set(${result} "${dir_list}" PARENT_SCOPE)
-endfunction()
+# Create the executable target
+add_library(akairo ${SOURCES} ${HEADERS})
 
-get_all_subdirs("${CMAKE_CURRENT_SOURCE_DIR}/src" ALL_SRC_DIRS)
-
-target_include_directories(akairo PRIVATE ${ALL_SRC_DIRS})
-# end
-
+# Include directories - the most important part
+target_include_directories(akairo PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
 
 # Fetch ImGui
 include(FetchContent)
@@ -44,21 +31,19 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(imgui)
 
-
-
 # ImGui integration
-
-
-    target_include_directories(akairo PRIVATE
-            ${imgui_SOURCE_DIR}
-    )
-    target_link_libraries(akairo PRIVATE imgui)
+target_include_directories(akairo PRIVATE
+        ${imgui_SOURCE_DIR}
+)
+target_link_libraries(akairo PRIVATE imgui)
 
 # Direct2D integration
+target_link_libraries(akairo PRIVATE
+        d2d1
+        dwrite
+        dxgi
+)
 
-
-    target_link_libraries(akairo PRIVATE
-            d2d1
-            dwrite
-            dxgi
-    )
+# Print info for debugging
+message(STATUS "Source files: ${SOURCES}")
+message(STATUS "Header files: ${HEADERS}")

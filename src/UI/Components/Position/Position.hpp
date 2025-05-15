@@ -1,6 +1,6 @@
 #pragma once
-#include "../../Utils/Vectors.hpp"
-#include "../../Utils/BoundingRect.hpp"
+#include "Utils/BoundingRect.hpp"
+#include "Utils/Vectors.hpp"
 
 namespace akairo::Components {
 class Position
