@@ -1,16 +1,15 @@
 #include "Rectangle.hpp"
 
 namespace akairo::Shapes {
-    Rectangle::Rectangle(const Components::Position& position,
-                       std::string name,
-                       std::unique_ptr<Renderer::Interface> renderer)
-        : Shape(position, std::move(name), std::move(renderer)) {
+    Rectangle::Rectangle(std::string name, const Components::Position& position, Components::Size size,
+            std::unique_ptr<Renderer::Interface> renderer)
+        : Shape(std::move(name), position, size, std::move(renderer)) {
     }
 
     void Rectangle::Draw() {
         auto Renderer = GetRenderer();
         if (Renderer) {
-            Renderer->DrawRectangle(position); // Add size later
+            Renderer->DrawRectangle(position, size);
         }
     }
 

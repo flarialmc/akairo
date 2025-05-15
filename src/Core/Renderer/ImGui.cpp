@@ -23,9 +23,14 @@ namespace akairo::Renderer
         this->list = ::ImGui::GetBackgroundDrawList();
     }
 
-    void ImGui::DrawRectangle(Components::Position pos) const
+    void ImGui::DrawRectangle(Components::Position pos, Components::Size size) const
     {
 
         // add Size soon
+        this->list->AddRectFilled(
+            ImVec2(pos.ProperPosition.x, pos.ProperPosition.y),
+            ImVec2(pos.ProperPosition.x + size.ProperSize.x, pos.ProperPosition.y + size.ProperSize.y),
+            IM_COL32(255, 0, 0, 255)
+        );
     }
 }

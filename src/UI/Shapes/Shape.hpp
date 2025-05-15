@@ -7,7 +7,7 @@
 
 
 namespace akairo::Shapes {
-    class Shape : public akairo::Element {
+    class Shape : public Element {
     public:
 
         Components::Position position;
@@ -16,8 +16,7 @@ namespace akairo::Shapes {
 
         virtual void Draw() = 0;
 
-        Shape(const Components::Position& position,
-            std::string name,
+        Shape(std::string name, const Components::Position& position, Components::Size size,
             std::unique_ptr<Renderer::Interface> renderer)
 
         : Element(std::move(name), std::move(renderer)),
