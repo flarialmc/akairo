@@ -1,4 +1,5 @@
 #pragma once
+#include <imgui.h>
 
 namespace akairo::Components
 {
@@ -11,5 +12,6 @@ public:
     Color(int r, int g, int b, int a);
     Color();
 
+    ImColor toImColor() const;
 };
 }

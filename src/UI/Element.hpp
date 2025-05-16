@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Components/Size/Size.hpp"
+#include "Shapes/Shape.hpp"
 #include "Core/Renderer/Interface.hpp"
 
 /*
@@ -22,6 +23,11 @@ namespace akairo
         class Interface;
     }
 
+    namespace Shapes
+    {
+        class Shape;
+    }
+
     class Element
     {
     public:
@@ -32,9 +38,13 @@ namespace akairo
         void AddChild(std::unique_ptr<Element> child); //Adds child to the list
         void RemoveChild(std::unique_ptr<Element> child); //Removes child
         void Parentize(std::unique_ptr<Element> Parent); //Changes the parent or adds the parent to this element
+        template <typename ShapeType, typename... TArgs>
+        void SetShape(TArgs... argList)
+        {
+            shape = std::unique_ptr<ShapeType>(position, size, std::move(renderer), std::forward<TArgs>(argList)...);
+            Drawable = true;
+        }
         virtual void Update();
-        virtual void Draw() = 0; // Draws the element
-
 
         std::unique_ptr<Renderer::Interface> GetRenderer();
 
@@ -45,5 +55,9 @@ namespace akairo
 
         Components::Position position;
         Components::Size size;
+
+        bool Drawable = false;
+        std::unique_ptr<Shapes::Shape> shape = nullptr;
+
     };
 }
