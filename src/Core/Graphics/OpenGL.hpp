@@ -5,8 +5,9 @@ namespace akairo::Graphics {
     class OpenGL : public Interface {
      public:
        OpenGL(int Width, int Height);
-       ~OpenGL();
-       bool Initialize(int Width, int Height);
-       void Shutdown();
+       ~OpenGL() override;
+       bool Initialize(int Width, int Height) override;
+       void Shutdown() override;
+        void Resize(int Width, int Height) override;
     };
 };

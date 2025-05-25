@@ -29,4 +29,8 @@ namespace akairo::Graphics
     {
         // TODO: Add OpenGL cleanup code
     }
+    void OpenGL::Resize(int Width, int Height)
+    {
+
+    }
 }
