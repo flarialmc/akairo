@@ -32,13 +32,13 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(imgui)
 
 # ImGui integration
-target_include_directories(akairo PRIVATE
+target_include_directories(akairo PUBLIC
         ${imgui_SOURCE_DIR}
 )
-target_link_libraries(akairo PRIVATE imgui)
+target_link_libraries(akairo PUBLIC imgui)
 
 # Direct2D integration
-target_link_libraries(akairo PRIVATE
+target_link_libraries(akairo PUBLIC
         d2d1
         dwrite
         dxgi
