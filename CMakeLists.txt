@@ -37,6 +37,10 @@ target_include_directories(akairo PUBLIC
 )
 target_link_libraries(akairo PUBLIC imgui)
 
+file(GLOB IMGUI_SOURCES ${imgui_SOURCE_DIR}/*.cpp)
+add_library(imgui STATIC ${IMGUI_SOURCES})
+target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR})
+
 # Direct2D integration
 target_link_libraries(akairo PUBLIC
         d2d1
