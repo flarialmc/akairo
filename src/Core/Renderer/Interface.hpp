@@ -51,9 +51,9 @@ namespace akairo::Renderer {
          * This is an abstraction function that differs between renderers. For example,
          * There could be D2D.. ImGUI.. Pure OpenGL.. or even DirectX11.
          */
-        virtual void DrawRectangle(Components::Position pos, Components::Size size, Components::Color color) const;
-        virtual void DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const;
-        virtual void DrawCircle(Components::Position pos, float radius, Components::Color color) const;
+        virtual void DrawRectangle(Components::Position pos, Components::Size size, Components::Color color) const = 0;
+        virtual void DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const = 0;
+        virtual void DrawCircle(Components::Position pos, float radius, Components::Color color) const = 0;
         std::unordered_map<std::string, std::unique_ptr<Element>> elements;
 
 
