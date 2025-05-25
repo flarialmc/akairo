@@ -1,4 +1,5 @@
 #pragma once
+#include <imgui.h>
 
 class Vec2
 {
@@ -7,33 +8,38 @@ public:
 
     Vec2(float x = 0, float y = 0): x(x), y(y) {};
 
-    Vec2 operator+(Vec2 vec2)
+    Vec2 operator+(Vec2 vec2) const
     {
-        return Vec2(this->x + vec2.x, this->y + vec2.y);
+        return {this->x + vec2.x, this->y + vec2.y};
     }
 
-    Vec2 operator-(Vec2 vec2)
+    Vec2 operator-(Vec2 vec2) const
     {
-        return Vec2(this->x - vec2.x, this->y - vec2.y);
+        return {this->x - vec2.x, this->y - vec2.y};
     }
 
-    Vec2 operator*(Vec2 vec2)
+    Vec2 operator*(Vec2 vec2) const
     {
-        return Vec2(this->x * vec2.x, this->y * vec2.y);
+        return {this->x * vec2.x, this->y * vec2.y};
     }
 
-    Vec2 operator*(float num)
+    Vec2 operator*(float num) const
     {
-        return Vec2(this->x * num, this->y * num);
+        return {this->x * num, this->y * num};
     }
 
-    Vec2 operator/(Vec2 vec2)
+    Vec2 operator/(Vec2 vec2) const
     {
-        return Vec2(this->x / vec2.x, this->y / vec2.y);
+        return {this->x / vec2.x, this->y / vec2.y};
     }
 
-    Vec2 operator/(float num)
+    Vec2 operator/(float num) const
     {
-        return Vec2(this->x / num, this->y / num);
+        return {this->x / num, this->y / num};
+    }
+
+    [[nodiscard]] ImVec2 getImVec2() const
+    {
+        return {this->x, this->y};
     }
 };

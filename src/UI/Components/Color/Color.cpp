@@ -20,3 +20,8 @@ akairo::Components::Color::Color()
 {
     this->r = this->g = this->b = this->a = 0;
 }
+
+ImColor akairo::Components::Color::toImColor() const
+{
+    return ImColor(r, g, b, a);
+}

@@ -14,7 +14,9 @@ namespace akairo::Renderer {
     public:
         ImGui(BackendType backend, int Width, int Height);
         ~ImGui() override = default;
-        void DrawRectangle(Components::Position pos, Components::Size size) const override;
+        void DrawRectangle(Components::Position pos, Components::Size size, Components::Color color) const override;
+        void DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const override;
+        void DrawCircle(Components::Position pos, float radius, Components::Color color) const override;
     };
 
 }

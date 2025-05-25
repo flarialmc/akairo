@@ -1,4 +1,6 @@
 #pragma once
+#include <imgui.h>
+
 #include "Utils/BoundingRect.hpp"
 #include "Utils/Vectors.hpp"
 
@@ -13,7 +15,7 @@ public:
     Vec2 RelativePosition; //Position Relative to the Parent Rect (In Pixels)
     Vec2 ProperPosition; //RelativePosition + ParentRect Position
 
-    Position(Vec2 Position, BoundingRect ParentRect = {});
+    explicit Position(Vec2 Position, BoundingRect ParentRect = {});
     Position();
     void Parentize(BoundingRect ParentRect);
     void Update();
