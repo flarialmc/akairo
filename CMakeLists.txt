@@ -18,7 +18,7 @@ file(GLOB_RECURSE HEADERS
 add_library(akairo ${SOURCES} ${HEADERS})
 
 # Include directories - the most important part
-target_include_directories(akairo PRIVATE
+target_include_directories(akairo PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
