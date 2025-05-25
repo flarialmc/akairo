@@ -4,23 +4,8 @@ project(akairo VERSION 0.1.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find all source files
-file(GLOB_RECURSE SOURCES
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
-)
-
-# Find all header files
-file(GLOB_RECURSE HEADERS
-        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp"
-)
-
-# Create the executable target
-add_library(akairo ${SOURCES} ${HEADERS})
-
-# Include directories - the most important part
-target_include_directories(akairo PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
-)
+# Find actual OpenGL library
+find_package(OpenGL REQUIRED)
 
 # Fetch ImGui
 include(FetchContent)
@@ -31,23 +16,64 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(imgui)
 
-# ImGui integration
-target_include_directories(akairo PUBLIC
-        ${imgui_SOURCE_DIR}
+# Create ImGui library with required backends
+set(IMGUI_SOURCES
+        ${imgui_SOURCE_DIR}/imgui.cpp
+        ${imgui_SOURCE_DIR}/imgui_demo.cpp
+        ${imgui_SOURCE_DIR}/imgui_draw.cpp
+        ${imgui_SOURCE_DIR}/imgui_tables.cpp
+        ${imgui_SOURCE_DIR}/imgui_widgets.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_opengl3.cpp
+        ${imgui_SOURCE_DIR}/backends/imgui_impl_win32.cpp
+        # Add other backends you need
 )
-target_link_libraries(akairo PUBLIC imgui)
 
-file(GLOB IMGUI_SOURCES ${imgui_SOURCE_DIR}/*.cpp)
 add_library(imgui STATIC ${IMGUI_SOURCES})
-target_include_directories(imgui PUBLIC ${imgui_SOURCE_DIR})
+target_include_directories(imgui PUBLIC
+        ${imgui_SOURCE_DIR}
+        ${imgui_SOURCE_DIR}/backends
+)
+target_link_libraries(imgui PUBLIC OpenGL::GL)
 
-# Direct2D integration
+# Find all akairo source files
+file(GLOB_RECURSE SOURCES
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+)
+
+# Find all header files (for IDE only)
+file(GLOB_RECURSE HEADERS
+        "${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp"
+)
+
+# Create the akairo library
+add_library(akairo STATIC ${SOURCES})
+
+# Include directories
+target_include_directories(akairo PUBLIC
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${imgui_SOURCE_DIR}
+        ${imgui_SOURCE_DIR}/backends
+)
+
+# Link libraries
 target_link_libraries(akairo PUBLIC
+        imgui
+        OpenGL::GL
         d2d1
         dwrite
         dxgi
 )
 
+# Installation rules
+install(TARGETS akairo
+        ARCHIVE DESTINATION lib
+        LIBRARY DESTINATION lib
+        RUNTIME DESTINATION bin)
+install(DIRECTORY src/
+        DESTINATION include/akairo
+        FILES_MATCHING PATTERN "*.hpp")
+
 # Print info for debugging
 message(STATUS "Source files: ${SOURCES}")
 message(STATUS "Header files: ${HEADERS}")
+message(STATUS "ImGui sources: ${IMGUI_SOURCES}")
