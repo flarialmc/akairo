@@ -63,18 +63,19 @@ namespace akairo::Renderer {
          * Then renders it in a Retained mode, ordered style.
          */
         template<typename T, typename... Args>
-        std::unique_ptr<T> CreateElement(const std::string& name, Args&&... args) {
+        T* CreateElement(const std::string& name, Args&&... args) {
             if (elements.find(name) != elements.end()) {
                 return dynamic_cast<T*>(elements[name].get());
             }
 
-            auto element = std::make_unique<T>(std::forward<Args>(args)..., name, this);
+            // Create element without the extra parameters
+            auto element = std::make_unique<T>(std::forward<Args>(args)...);
             T* elementPtr = element.get();
-            elements[name] = std::move(element);
+
+            elements[name] = std::unique_ptr<Element>(reinterpret_cast<Element*>(element.release()));
 
             return elementPtr;
         }
-
         /*
          * Get and modify any element you want,
          * Especially one you didn't store yourself, for some reason.

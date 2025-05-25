@@ -28,7 +28,7 @@ void akairo::Element::Update()
     }
 }
 
-std::unique_ptr<akairo::Renderer::Interface> akairo::Element::GetRenderer()
+akairo::Renderer::Interface* akairo::Element::GetRenderer()
 {
-    return std::move(renderer);
+    return renderer;
 }

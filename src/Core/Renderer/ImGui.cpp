@@ -1,5 +1,8 @@
 #include "ImGui.hpp"
 
+#include <iostream>
+#include <ostream>
+
 /*
  * There is no need to call an initializer as "initialization" is conducted inside the constructor.
  */
@@ -11,22 +14,28 @@ namespace akairo::Renderer
         this->backend = std::make_unique<Graphics::OpenGL>(Width, Height);
         this->backendType = backend;
 
+        std::cout << "Creating ImGui Context" << std::endl;
+
+
+        this->context = ::ImGui::CreateContext();
+        ::ImGui::SetCurrentContext(context);
+        std::cout << "ImGui Context Created" << std::endl;
+
         switch (backend)
         {
-        case BackendType::OpenGL: { ImGui_ImplOpenGL3_Init("#version 300 es"); }
+        case BackendType::OpenGL: { ImGui_ImplOpenGL3_Init("#version 130"); break; }
         default:
             {
+                break;
             }
         }
 
-        this->context = ::ImGui::CreateContext();
-        this->list = ::ImGui::GetBackgroundDrawList();
     }
 
     void ImGui::DrawRectangle(Components::Position pos, Components::Size size, Components::Color color) const
     {
 
-        this->list->AddRectFilled(
+        ::ImGui::GetBackgroundDrawList()->AddRectFilled(
             pos.ProperPosition.getImVec2(),
             (pos.ProperPosition + size.ProperSize).getImVec2(),
             color.toImColor(),
@@ -37,7 +46,7 @@ namespace akairo::Renderer
 
     void ImGui::DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const
     {
-        this->list->AddRect(
+        ::ImGui::GetBackgroundDrawList()->AddRect(
             pos.ProperPosition.getImVec2(),
             (pos.ProperPosition + size.ProperSize).getImVec2(),
             color.toImColor(),
@@ -48,7 +57,7 @@ namespace akairo::Renderer
 
     void ImGui::DrawCircle(Components::Position pos, float radius, Components::Color color) const
     {
-        this->list->AddCircleFilled(pos.ProperPosition.getImVec2(), radius, color.toImColor());
+        ::ImGui::GetBackgroundDrawList()->AddCircleFilled(pos.ProperPosition.getImVec2(), radius, color.toImColor());
     }
 
 }

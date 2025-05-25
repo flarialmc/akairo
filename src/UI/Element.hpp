@@ -32,8 +32,8 @@ namespace akairo
     {
     public:
         virtual ~Element() = default;
-        Element(std::string name, std::unique_ptr<Renderer::Interface> renderer)
-            : name(std::move(name)), renderer(std::move(renderer)) {}
+        Element(std::string name, Renderer::Interface* renderer)
+            : name(std::move(name)), renderer(renderer) {}
 
         void AddChild(std::unique_ptr<Element> child); //Adds child to the list
         void RemoveChild(std::unique_ptr<Element> child); //Removes child
@@ -41,17 +41,17 @@ namespace akairo
         template <typename ShapeType, typename... TArgs>
         void SetShape(TArgs... argList)
         {
-            shape = std::unique_ptr<ShapeType>(position, size, std::move(renderer), std::forward<TArgs>(argList)...);
+            shape = std::unique_ptr<ShapeType>(position, size, renderer, std::forward<TArgs>(argList)...);
             Drawable = true;
         }
         virtual void Update();
 
-        std::unique_ptr<Renderer::Interface> GetRenderer();
+        Renderer::Interface* GetRenderer();
 
         std::string name;
         std::unique_ptr<Element> parent = nullptr;
         std::vector<std::unique_ptr<Element>> children;
-        std::unique_ptr<Renderer::Interface> renderer;
+        Renderer::Interface* renderer;
 
         Components::Position position;
         Components::Size size;
