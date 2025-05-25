@@ -11,4 +11,22 @@ namespace akairo::Graphics
         this->Width = Width;
         this->Height = Height;
     }
+
+    OpenGL::~OpenGL()
+    {
+        OpenGL::Shutdown();
+    }
+
+    bool OpenGL::Initialize(int Width, int Height)
+    {
+        this->Width = Width;
+        this->Height = Height;
+        // TODO: Add OpenGL initialization code
+        return true;
+    }
+
+    void OpenGL::Shutdown()
+    {
+        // TODO: Add OpenGL cleanup code
+    }
 }
