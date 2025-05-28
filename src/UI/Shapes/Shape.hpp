@@ -1,14 +1,15 @@
 #pragma once
-#include <utility>
 
 #include "Core/Renderer/Interface.hpp"
-#include "UI/Components/Color/Color.hpp"
-
-    namespace akairo::Renderer
-    {
-        class Interface;
-    }
-
+#include "UI/Element.hpp"
+namespace akairo::Renderer
+{
+    class Interface;
+}
+namespace akairo
+{
+    class Element;
+}
 
 namespace akairo::Shapes {
     class Shape : public Element {

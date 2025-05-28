@@ -5,7 +5,6 @@
 #include <string>
 
 #include "Components/Size/Size.hpp"
-#include "Shapes/Shape.hpp"
 #include "Core/Renderer/Interface.hpp"
 
 /*
@@ -19,15 +18,11 @@
 
 namespace akairo
 {
+
     namespace Renderer
     {
         class Interface;
-    }
-
-    namespace Shapes
-    {
-        class Shape;
-    }
+    };
 
     class Element
     {
@@ -39,12 +34,6 @@ namespace akairo
         void AddChild(std::shared_ptr<Element> child); //Adds child to the list
         void RemoveChild(const std::shared_ptr<Element>& child); //Removes child
         void Parentize(std::shared_ptr<Element> Parent); //Changes the parent or adds the parent to this element
-        template <typename ShapeType, typename... TArgs>
-        void SetShape(TArgs... argList)
-        {
-            shape = std::shared_ptr<ShapeType>(position, size, renderer, std::forward<TArgs>(argList)...);
-            Drawable = true;
-        }
         virtual void Update();
 
         [[nodiscard]] std::shared_ptr<Renderer::Interface> GetRenderer() const;
@@ -58,7 +47,6 @@ namespace akairo
         Components::Size size;
 
         bool Drawable = false;
-        std::shared_ptr<Shapes::Shape> shape = nullptr;
 
     };
 }
