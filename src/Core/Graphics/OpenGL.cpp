@@ -35,24 +35,8 @@ namespace akairo::Graphics
     {
         this->Width = Width;
         this->Height = Height;
-        for (auto& r : renderers)
-        {
-            for (auto& e : r.second->elements)
-            {
-                if (!e.second->parent)
-                {
-                    e.second->size.Bind(BoundingRect(Vec2(0, 0), Vec2(Width, Height)));
-                    e.second->Update();
-                }
-            }
 
-            for (auto& e : r.second->elements)
-            {
-                if (e.second->parent)
-                {
-                    e.second->Update();
-                }
-            }
-        }
     }
+
+
 }

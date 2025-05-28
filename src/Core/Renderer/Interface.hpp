@@ -2,10 +2,9 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
-#include <Core/Graphics/OpenGL.hpp>
-#include "UI/Components/Position/Position.hpp"
-#include "UI/Element.hpp"
-#include "UI/Components/Color/Color.hpp"
+#include <UI/Components/Color/Color.hpp>
+#include <UI/Components/Position/Position.hpp>
+#include <UI/Components/Size/Size.hpp>
 
 namespace akairo
 {
@@ -14,6 +13,12 @@ namespace akairo
 
 namespace akairo::Renderer {
 
+    enum FrameworkType
+    {
+        UndefinedFramework,
+        ImGUI,
+        D2D
+    };
     enum BackendType {
 
         UndefinedBackend,
@@ -21,13 +26,6 @@ namespace akairo::Renderer {
         OpenGL
 
      };
-
-    enum FrameworkType
-    {
-        UndefinedFramework,
-        ImGUI,
-        D2D
-    };
 
     enum OSType
     {
@@ -39,7 +37,6 @@ namespace akairo::Renderer {
     public:
         virtual ~Interface() = default;
         BackendType backendType = OpenGL;
-        std::shared_ptr<Graphics::Interface> backend{};
 
         explicit Interface(BackendType backend) {
             this->backendType = backend;

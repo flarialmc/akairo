@@ -1,14 +1,14 @@
 #pragma once
-#include <iostream>
+#include <memory>
+#include <string>
 #include <unordered_map>
-#include <Core/Renderer/Interface.hpp>
-
-
+#include "Core/Graphics/Interface.hpp"
 
 namespace akairo {
 
-    static std::unordered_map<std::string, std::shared_ptr<Renderer::Interface>> renderers;
-    bool CreateRenderer(const std::string& name, Renderer::BackendType backend, Renderer::FrameworkType framework, int Width, int Height);
 
-    std::shared_ptr<Renderer::Interface> GetRenderer(const std::string& name);
+
+    extern std::unordered_map<std::string, std::shared_ptr<Graphics::Interface>> graphics;
+    bool CreateGraphics(const std::string& name, Graphics::BackendType backend, int Width, int Height);
+    std::shared_ptr<Graphics::Interface> GetGraphics(const std::string& name);
 };

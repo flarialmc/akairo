@@ -1,20 +1,19 @@
-#include "ImGui.hpp"
-
-#include <iostream>
-#include <ostream>
 
 /*
  * There is no need to call an initializer as "initialization" is conducted inside the constructor.
  */
 
+#include "ImGui.hpp"
+
+#include <imgui_impl_opengl3.h>
+#include <memory>
+#include <Core/Graphics/OpenGL.hpp>
+
 namespace akairo::Renderer
 {
-    ImGui::ImGui(BackendType backend, int Width, int Height): Interface(backend)
+    ImGui::ImGui(BackendType backend): Interface(backend)
     {
-        this->backend = std::make_shared<Graphics::OpenGL>(Width, Height);
         this->backendType = backend;
-
-
 
         this->context = ::ImGui::CreateContext();
         ::ImGui::SetCurrentContext(context);
