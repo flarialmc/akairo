@@ -57,7 +57,7 @@ namespace akairo::Graphics {
             return true;
         };
         std::shared_ptr<Renderer::Interface> GetRenderer(const std::string& name)   {
-            if (renderers.contains(name)) return renderers[name];
+            if (renderers.find(name) != renderers.end()) return renderers[name];
             return nullptr;
         }
     };
