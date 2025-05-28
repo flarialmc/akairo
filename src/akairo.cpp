@@ -11,7 +11,7 @@ namespace akairo
     switch (framework) {
     case Renderer::FrameworkType::ImGUI:
       {
-        renderers[name] = std::make_unique<Renderer::ImGui>(Renderer::OpenGL, Width, Height);
+        renderers[name] = std::make_shared<Renderer::ImGui>(Renderer::OpenGL, Width, Height);
         break;
         /*
          * This is a test to see if the renderer is working.
@@ -31,9 +31,9 @@ namespace akairo
     return true;
   };
 
-Renderer::Interface* GetRenderer(const std::string& name)
+std::shared_ptr<Renderer::Interface> GetRenderer(const std::string& name)
   {
-    if (renderers.contains(name)) return renderers[name].get();
+    if (renderers.contains(name)) return renderers[name];
     return nullptr;
   }
 };

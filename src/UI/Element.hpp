@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <utility>
 #include <vector>
 #include <string>
 
@@ -32,32 +33,32 @@ namespace akairo
     {
     public:
         virtual ~Element() = default;
-        Element(std::string name, Renderer::Interface* renderer)
-            : name(std::move(name)), renderer(renderer) {}
+        Element(std::string name, std::shared_ptr<Renderer::Interface> renderer)
+            : name(std::move(name)), renderer(std::move(renderer)) {}
 
-        void AddChild(std::unique_ptr<Element> child); //Adds child to the list
-        void RemoveChild(std::unique_ptr<Element> child); //Removes child
-        void Parentize(std::unique_ptr<Element> Parent); //Changes the parent or adds the parent to this element
+        void AddChild(std::shared_ptr<Element> child); //Adds child to the list
+        void RemoveChild(const std::shared_ptr<Element>& child); //Removes child
+        void Parentize(std::shared_ptr<Element> Parent); //Changes the parent or adds the parent to this element
         template <typename ShapeType, typename... TArgs>
         void SetShape(TArgs... argList)
         {
-            shape = std::unique_ptr<ShapeType>(position, size, renderer, std::forward<TArgs>(argList)...);
+            shape = std::shared_ptr<ShapeType>(position, size, renderer, std::forward<TArgs>(argList)...);
             Drawable = true;
         }
         virtual void Update();
 
-        Renderer::Interface* GetRenderer();
+        [[nodiscard]] std::shared_ptr<Renderer::Interface> GetRenderer() const;
 
         std::string name;
-        std::unique_ptr<Element> parent = nullptr;
-        std::vector<std::unique_ptr<Element>> children;
-        Renderer::Interface* renderer;
+        std::shared_ptr<Element> parent = nullptr;
+        std::vector<std::shared_ptr<Element>> children;
+        std::shared_ptr<Renderer::Interface> renderer;
 
         Components::Position position;
         Components::Size size;
 
         bool Drawable = false;
-        std::unique_ptr<Shapes::Shape> shape = nullptr;
+        std::shared_ptr<Shapes::Shape> shape = nullptr;
 
     };
 }

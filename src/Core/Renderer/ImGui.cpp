@@ -11,15 +11,13 @@ namespace akairo::Renderer
 {
     ImGui::ImGui(BackendType backend, int Width, int Height): Interface(backend)
     {
-        this->backend = std::make_unique<Graphics::OpenGL>(Width, Height);
+        this->backend = std::make_shared<Graphics::OpenGL>(Width, Height);
         this->backendType = backend;
 
-        std::cout << "Creating ImGui Context" << std::endl;
 
 
         this->context = ::ImGui::CreateContext();
         ::ImGui::SetCurrentContext(context);
-        std::cout << "ImGui Context Created" << std::endl;
 
         switch (backend)
         {

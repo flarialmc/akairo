@@ -8,7 +8,7 @@ namespace akairo::Renderer {
 
     class ImGui final : public Interface {
         ImGuiContext* context{};
-        std::unique_ptr<Graphics::OpenGL> OpenGL;
+        std::shared_ptr<Graphics::OpenGL> OpenGL;
 
     public:
         ImGui(BackendType backend, int Width, int Height);

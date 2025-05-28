@@ -39,7 +39,7 @@ namespace akairo::Renderer {
     public:
         virtual ~Interface() = default;
         BackendType backendType = OpenGL;
-        std::unique_ptr<Graphics::Interface> backend{};
+        std::shared_ptr<Graphics::Interface> backend{};
 
         explicit Interface(BackendType backend) {
             this->backendType = backend;
@@ -54,7 +54,7 @@ namespace akairo::Renderer {
         virtual void DrawRectangle(Components::Position pos, Components::Size size, Components::Color color) const = 0;
         virtual void DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const = 0;
         virtual void DrawCircle(Components::Position pos, float radius, Components::Color color) const = 0;
-        std::unordered_map<std::string, std::unique_ptr<Element>> elements;
+        std::unordered_map<std::string, std::shared_ptr<Element>> elements;
 
 
         /*
@@ -69,10 +69,10 @@ namespace akairo::Renderer {
             }
 
             // Create element without the extra parameters
-            auto element = std::make_unique<T>(std::forward<Args>(args)...);
+            auto element = std::make_shared<T>(std::forward<Args>(args)...);
             T* elementPtr = element.get();
 
-            elements[name] = std::unique_ptr<Element>(reinterpret_cast<Element*>(element.release()));
+            elements[name] = std::shared_ptr<Element>(reinterpret_cast<Element*>(element.release()));
 
             return elementPtr;
         }

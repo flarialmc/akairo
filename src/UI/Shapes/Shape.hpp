@@ -19,12 +19,12 @@ namespace akairo::Shapes {
         Components::Position position;
         Components::Size size;
         Components::Color color;
-        Renderer::Interface* renderer;
+        std::shared_ptr<Renderer::Interface> renderer;
 
         virtual void Draw() = 0;
 
-        Shape(const Components::Position& position, Components::Size size, Components::Color color, Renderer::Interface* renderer);
-        void UpdateShape(const Components::Position& position, Components::Size size, Components::Color color, Renderer::Interface* renderer);
+        Shape(const Components::Position& position, Components::Size size, Components::Color color, std::shared_ptr<Renderer::Interface> renderer);
+        void UpdateShape(const Components::Position& position, Components::Size size, Components::Color color, std::shared_ptr<Renderer::Interface> renderer);
 
 
     };
