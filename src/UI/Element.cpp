@@ -19,10 +19,13 @@ namespace akairo
 
     void Element::Update()
     {
-        const BoundingRect ParentBounds = BoundingRect(parent->position.ProperPosition, parent->position.ProperPosition + parent->size.ProperSize);
+        if (parent)
+        {
+            const BoundingRect ParentBounds = BoundingRect(parent->position.ProperPosition, parent->position.ProperPosition + parent->size.ProperSize);
 
-        this->position.Parentize(ParentBounds);
-        this->size.Bind(ParentBounds);
+            this->position.Parentize(ParentBounds);
+            this->size.Bind(ParentBounds);
+        }
         this->size.Update();
         this->position.Update();
 
