@@ -30,7 +30,7 @@ namespace akairo
     {
     public:
         virtual ~Element() = default;
-        Element(std::string name, std::shared_ptr<Renderer::Interface> renderer)
+        Element(std::string name, const std::shared_ptr<Renderer::Interface>& renderer)
             : name(std::move(name)), renderer(renderer)
         {
             this->renderer = renderer;
@@ -40,6 +40,7 @@ namespace akairo
         void RemoveChild(const std::shared_ptr<Element>& child); //Removes child
         void Parentize(std::shared_ptr<Element> Parent); //Changes the parent or adds the parent to this element
         virtual void Update();
+        virtual void Update(Components::Position, Components::Size);
 
         [[nodiscard]] std::shared_ptr<Renderer::Interface> GetRenderer() const;
 
