@@ -63,19 +63,16 @@ namespace akairo::Renderer {
          * Then renders it in a Retained mode, ordered style.
          */
         template<typename T, typename... Args>
-        T* CreateElement(const std::string& name, Args&&... args) {
+        std::shared_ptr<T> CreateElement(const std::string& name, Args&&... args) {
             if (elements.find(name) != elements.end()) {
-                return dynamic_cast<T*>(elements[name].get());
+                return std::dynamic_pointer_cast<T>(elements[name]);
             }
 
-            // Create element without the extra parameters
             auto element = std::make_shared<T>(std::forward<Args>(args)...);
-            T* elementPtr = element.get();
-
-            elements[name] = std::shared_ptr<Element>(reinterpret_cast<Element*>(element.release()));
-
-            return elementPtr;
+            elements[name] = std::static_pointer_cast<Element>(element);
+            return element;
         }
+
         /*
          * Get and modify any element you want,
          * Especially one you didn't store yourself, for some reason.
