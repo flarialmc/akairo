@@ -8,7 +8,6 @@ akairo::Shapes::Shape::Shape(std::string name, const Components::Position& posit
     this->position = position;
     this->size = size;
     this->color = color;
-    this->renderer = renderer;
 }
 
 void akairo::Shapes::Shape::UpdateShape(const Components::Position& position, const Components::Size& size, const Components::Color color, std::shared_ptr<Renderer::Interface> renderer)
