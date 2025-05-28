@@ -5,7 +5,7 @@ namespace akairo::Components {
     class Size
     {
         bool WidthDependsOnHeight = false;
-        BoundingRect Parent;
+        BoundingRect Bounds;
 
     public:
         Vec2 SizeConstraints; //Size Constraints (eg Vec2(50, 60) => 50% from left and 60% from top
@@ -13,7 +13,7 @@ namespace akairo::Components {
 
         Size(Vec2 Size, BoundingRect ParentRect, bool WidthDependsOnHeight = false);
         Size();
-        void Parentize(BoundingRect ParentRect);
+        void Bind(BoundingRect Bounds);
         void Update();
         void Update(Vec2 Size);
     };

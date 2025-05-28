@@ -45,8 +45,6 @@ namespace akairo::Renderer {
             this->backendType = backend;
           }
 
-        [[nodiscard]] bool Initialize() const;
-
         /*
          * This is an abstraction function that differs between renderers. For example,
          * There could be D2D.. ImGUI.. Pure OpenGL.. or even DirectX11.

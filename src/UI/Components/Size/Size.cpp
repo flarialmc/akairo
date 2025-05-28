@@ -1,20 +1,20 @@
 #include "Size.hpp"
 
-akairo::Components::Size::Size(Vec2 Size, BoundingRect ParentRect, bool WidthDependsOnHeight)
+akairo::Components::Size::Size(Vec2 Size, BoundingRect Bounds, bool WidthDependsOnHeight)
 {
     this->WidthDependsOnHeight = WidthDependsOnHeight;
     SizeConstraints = Size;
-    this->Parent = ParentRect;
+    this->Bounds = Bounds;
 
     Vec2 Constraint = Vec2(Size.x, Size.y)/100.f;
 
     if (WidthDependsOnHeight)
     {
-        ProperSize = Constraint * (ParentRect.BottomRight - ParentRect.TopLeft).y;
+        ProperSize = Constraint * (Bounds.BottomRight - Bounds.TopLeft).y;
     }
     else
     {
-        ProperSize = Constraint * (ParentRect.BottomRight - ParentRect.TopLeft);
+        ProperSize = Constraint * (Bounds.BottomRight - Bounds.TopLeft);
     }
 }
 
@@ -23,13 +23,13 @@ akairo::Components::Size::Size()
     this->WidthDependsOnHeight = false;
     this->ProperSize = Vec2();
     this->SizeConstraints = Vec2();
-    this->Parent = BoundingRect();
+    this->Bounds = BoundingRect();
 }
 
 
-void akairo::Components::Size::Parentize(BoundingRect ParentRect)
+void akairo::Components::Size::Bind(BoundingRect Bounds)
 {
-    this->Parent = ParentRect;
+    this->Bounds = Bounds;
     Update();
 }
 
@@ -39,11 +39,11 @@ void akairo::Components::Size::Update()
 
     if (WidthDependsOnHeight)
     {
-        ProperSize = Constraint * (this->Parent.BottomRight - this->Parent.TopLeft).y;
+        ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft).y;
     }
     else
     {
-        ProperSize = Constraint * (this->Parent.BottomRight - this->Parent.TopLeft);
+        ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft);
     }
 }
 
@@ -54,10 +54,10 @@ void akairo::Components::Size::Update(Vec2 Size)
 
     if (WidthDependsOnHeight)
     {
-        ProperSize = Constraint * (this->Parent.BottomRight - this->Parent.TopLeft).y;
+        ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft).y;
     }
     else
     {
-        ProperSize = Constraint * (this->Parent.BottomRight - this->Parent.TopLeft);
+        ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft);
     }
 }

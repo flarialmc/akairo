@@ -22,7 +22,9 @@ namespace akairo
         const BoundingRect ParentBounds = BoundingRect(parent->position.ProperPosition, parent->position.ProperPosition + parent->size.ProperSize);
 
         this->position.Parentize(ParentBounds);
-        this->size.Parentize(ParentBounds);
+        this->size.Bind(ParentBounds);
+        this->size.Update();
+        this->position.Update();
 
         for (auto& child : children)
         {
