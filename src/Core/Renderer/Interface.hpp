@@ -77,11 +77,11 @@ namespace akairo::Renderer {
          * Get and modify any element you want,
          * Especially one you didn't store yourself, for some reason.
          */
-        Element* GetElement(const std::string& name) {
+        std::shared_ptr<Element> GetElement(const std::string& name) {
             auto it = elements.find(name);
             if (it != elements.end()) {
 
-                return it->second.get();
+                return it->second;
             }
             return nullptr;
         }
