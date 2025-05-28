@@ -17,9 +17,9 @@ namespace akairo
         this->parent = std::move(Parent);
     }
 
-    void Element::Update(Components::Position, Components::Size)
+    void Element::Update(Vec2 stuff)
     {
-        const BoundingRect ParentBounds = BoundingRect(parent->position.ProperPosition, parent->position.ProperPosition + parent->size.ProperSize);
+        const BoundingRect ParentBounds = BoundingRect(this->position.ProperPosition, this->position.ProperPosition + stuff);
         this->position.Parentize(ParentBounds);
         this->size.Bind(ParentBounds);
 

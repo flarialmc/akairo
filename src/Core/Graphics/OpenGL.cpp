@@ -53,7 +53,7 @@ namespace akairo::Graphics
             {
                 if (e.second->parent)
                 {
-                    e.second->Update();
+                    e.second->Update(Vec2(Width, Height));
                 }
             }
         }
