@@ -2,6 +2,7 @@
 #include "OpenGL.hpp"
 
 #include <akairo.hpp>
+#include <UI/Element.hpp>
 
 // TODO:
 // in the future, after talking with White
@@ -35,7 +36,27 @@ namespace akairo::Graphics
     {
         this->Width = Width;
         this->Height = Height;
+        for (auto& r : renderers)
+        {
+            std::cout << "Resizing renderer: " << r.first << " to " << Width << "x" << Height << std::endl;
+            for (auto& e : r.second->elements)
+            {
+                if (!e.second->parent)
+                {
+                    std::cout << "Resizing element: " << e.first << " to " << Width << "x" << Height << std::endl;
+                    e.second->size.Bind(BoundingRect(Vec2(0, 0), Vec2(Width, Height)));
+                    e.second->Update();
+                }
+            }
 
+            for (auto& e : r.second->elements)
+            {
+                if (e.second->parent)
+                {
+                    e.second->Update();
+                }
+            }
+        }
     }
 
 
