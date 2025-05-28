@@ -68,7 +68,7 @@ namespace akairo::Renderer {
                 return std::dynamic_pointer_cast<T>(elements[name]);
             }
 
-            auto element = std::make_shared<T>(std::forward<Args>(args)...);
+            auto element = std::make_shared<T>(name, std::forward<Args>(args)...);
             elements[name] = std::static_pointer_cast<Element>(element);
             return element;
         }
