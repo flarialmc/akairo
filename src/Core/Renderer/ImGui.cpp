@@ -34,19 +34,19 @@ namespace akairo::Renderer
     {
 
         ::ImGui::GetBackgroundDrawList()->AddRectFilled(
-            pos.ProperPosition.getImVec2(),
-            (pos.ProperPosition + size.ProperSize).getImVec2(),
-            color.toImColor(),
-            0,
-            240
-        );
+        pos.ProperPosition.getImVec2(),
+        size.ProperSize.getImVec2(),
+        color.toImColor(),
+        0,
+        240
+    );
     }
 
     void ImGui::DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const
     {
         ::ImGui::GetBackgroundDrawList()->AddRect(
             pos.ProperPosition.getImVec2(),
-            (pos.ProperPosition + size.ProperSize).getImVec2(),
+            size.ProperSize.getImVec2(),
             color.toImColor(),
             0,
             240,

@@ -1,5 +1,7 @@
 #pragma once
+#include <iostream>
 #include <memory>
+#include <ostream>
 #include <utility>
 #include <vector>
 #include <string>
@@ -29,7 +31,10 @@ namespace akairo
     public:
         virtual ~Element() = default;
         Element(std::string name, std::shared_ptr<Renderer::Interface> renderer)
-            : name(std::move(name)), renderer(std::move(renderer)) {}
+            : name(std::move(name)), renderer(renderer)
+        {
+            this->renderer = renderer;
+        }
 
         void AddChild(std::shared_ptr<Element> child); //Adds child to the list
         void RemoveChild(const std::shared_ptr<Element>& child); //Removes child

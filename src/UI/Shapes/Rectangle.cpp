@@ -1,5 +1,7 @@
 #include "Rectangle.hpp"
 
+#include <iostream>
+#include <ostream>
 #include <utility>
 
 namespace akairo::Shapes {
@@ -7,8 +9,7 @@ namespace akairo::Shapes {
     : Shape(name, position, size, color, renderer) {}
 
     void Rectangle::Draw() {
-        if (const auto Renderer = renderer) {
-            Renderer->DrawRectangle(position, size, color);
-        }
+        if (renderer) renderer->DrawRectangle(position, size, color);
+        else std::cout << "Renderer is not set for Rectangle: " << name << std::endl;
     }
 }
