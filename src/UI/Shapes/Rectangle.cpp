@@ -14,12 +14,9 @@ namespace akairo::Shapes {
 
     void Rectangle::Update(Vec2 stuff)
     {
-        const BoundingRect ParentBounds = BoundingRect(this->position.ProperPosition, this->position.ProperPosition + stuff);
-        this->position.Bind(ParentBounds);
+        BoundingRect ParentBounds = BoundingRect(this->position.ProperPosition, this->position.ProperPosition + stuff);
+        this->position.Parentize(ParentBounds);
         this->size.Bind(ParentBounds);
-
-        this->size.Update();
-        this->position.Update();
 
     }
 
@@ -29,7 +26,7 @@ namespace akairo::Shapes {
         {
             const BoundingRect ParentBounds = BoundingRect(parent->position.ProperPosition, parent->position.ProperPosition + parent->size.ProperSize);
 
-            this->position.Bind(ParentBounds);
+            this->position.Parentize(ParentBounds);
             this->size.Bind(ParentBounds);
         }
         this->size.Update();
@@ -41,3 +38,4 @@ namespace akairo::Shapes {
         }
     }
 }
+

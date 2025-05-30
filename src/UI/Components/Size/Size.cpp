@@ -1,5 +1,8 @@
 #include "Size.hpp"
 
+#include <iostream>
+#include <ostream>
+
 akairo::Components::Size::Size(Vec2 Size, BoundingRect Bounds, bool WidthDependsOnHeight)
 {
     this->WidthDependsOnHeight = WidthDependsOnHeight;
@@ -45,6 +48,7 @@ void akairo::Components::Size::Update()
     {
         ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft);
     }
+    std::cout << "Size updated to: " << ProperSize.x << ", " << ProperSize.y << std::endl;
 }
 
 void akairo::Components::Size::Update(Vec2 Size)

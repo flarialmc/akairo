@@ -17,7 +17,7 @@ public:
 
     explicit Position(Vec2 Position, BoundingRect ParentRect = {});
     Position();
-    void Bind(BoundingRect ParentRect);
+    void Parentize(BoundingRect ParentRect);
     void Update();
     void Update(Vec2 Position);
 };

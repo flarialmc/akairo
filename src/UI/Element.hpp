@@ -39,15 +39,9 @@ namespace akairo
 
         void AddChild(std::shared_ptr<Element> child); //Adds child to the list
         void RemoveChild(const std::shared_ptr<Element>& child); //Removes child
-        void Bind(std::shared_ptr<Element> Parent); //Changes the parent or adds the parent to this element
-
-        /* Each element class will require its own implementation of an Update function.
-         * This is to update the element's position, size, etc.
-         * It will be called by the renderer.
-         * This is to ensure that the polymorphic nature does not break.
-         */
-        virtual void Update();
-        virtual void Update(Vec2 stuff);
+        void Parentize(std::shared_ptr<Element> Parent); //Changes the parent or adds the parent to this element
+        virtual void Update() {};
+        virtual void Update(Vec2 stuff) {};
 
         [[nodiscard]] std::shared_ptr<Renderer::Interface> GetRenderer() const;
 

@@ -38,22 +38,20 @@ namespace akairo::Graphics
         this->Height = Height;
         for (auto& r : renderers)
         {
-            std::cout << "Resizing renderer: " << r.first << " to " << Width << "x" << Height << std::endl;
-            for (auto& e : r.second->elements)
+            for (auto& [name, element] : r.second->elements)
             {
-                if (!e.second->parent)
+                if (!element->parent)
                 {
-                    std::cout << "Resizing element: " << e.first << " to " << Width << "x" << Height << std::endl;
-                    e.second->size.Bind(BoundingRect(Vec2(0, 0), Vec2(Width, Height)));
-                    e.second->Update();
+                    element->Update(Vec2(Width, Height));
                 }
             }
 
-            for (auto& e : r.second->elements)
+            for (auto& [name, element] : r.second->elements)
             {
-                if (e.second->parent)
+                if (element->parent)
                 {
-                    e.second->Update(Vec2(Width, Height));
+                    std::cout << "Updating element: " << name << " with parent: " << element->parent->name << std::endl;
+                    element->Update();
                 }
             }
         }

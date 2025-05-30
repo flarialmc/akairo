@@ -1,5 +1,7 @@
 #pragma once
+#include <functional>
 #include <memory>
+#include <stdexcept>
 #include <string>
 #include <unordered_map>
 #include <UI/Components/Color/Color.hpp>
@@ -50,7 +52,7 @@ namespace akairo::Renderer {
         virtual void DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const = 0;
         virtual void DrawCircle(Components::Position pos, float radius, Components::Color color) const = 0;
         std::unordered_map<std::string, std::shared_ptr<Element>> elements;
-
+        virtual void Render(const std::function<void()>& func) = 0;
 
         /*
          * Creates an element, with a name, that you can modify as you wish.
@@ -59,12 +61,17 @@ namespace akairo::Renderer {
          */
         template<typename T, typename... Args>
         std::shared_ptr<T> CreateElement(const std::string& name, Args&&... args) {
-            if (elements.find(name) != elements.end()) {
-                return std::dynamic_pointer_cast<T>(elements[name]);
+            auto it = elements.find(name);
+            if (it != elements.end()) {
+                auto typedElement = std::dynamic_pointer_cast<T>(it->second);
+                if (!typedElement) {
+                    throw std::runtime_error("Element '" + name + "' exists but is of incompatible type");
+                }
+                return typedElement;
             }
 
             auto element = std::make_shared<T>(name, std::forward<Args>(args)...);
-            elements[name] = std::static_pointer_cast<Element>(element);
+            elements[name] = element;
             return element;
         }
 
@@ -72,11 +79,11 @@ namespace akairo::Renderer {
          * Get and modify any element you want,
          * Especially one you didn't store yourself, for some reason.
          */
-        std::shared_ptr<Element> GetElement(const std::string& name) {
+        template<typename T>
+        std::shared_ptr<T> GetElement(const std::string& name) {
             auto it = elements.find(name);
             if (it != elements.end()) {
-
-                return it->second;
+                return std::dynamic_pointer_cast<T>(it->second);
             }
             return nullptr;
         }

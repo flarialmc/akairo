@@ -17,6 +17,7 @@ namespace akairo::Renderer {
         void DrawRectangle(Components::Position pos, Components::Size size, Components::Color color) const override;
         void DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const override;
         void DrawCircle(Components::Position pos, float radius, Components::Color color) const override;
+        void Render(const std::function<void()>& extra) override;
     };
 
 }

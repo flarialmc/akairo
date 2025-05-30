@@ -29,6 +29,29 @@ namespace akairo::Renderer
 
     }
 
+    void ImGui::Render(const std::function<void()>& extra)
+    {
+        ::ImGui::Render();
+        switch (backendType)
+        {
+        case BackendType::OpenGL:
+            {
+                ImGui_ImplOpenGL3_NewFrame();
+                ::ImGui::NewFrame();
+
+                extra();
+
+                ::ImGui::EndFrame();
+                ::ImGui::Render();
+                ImGui_ImplOpenGL3_RenderDrawData(::ImGui::GetDrawData());
+                break;
+            }
+        default:
+            {
+                break;
+            }
+        }
+    }
     void ImGui::DrawRectangle(Components::Position pos, Components::Size size, Components::Color color) const
     {
 
