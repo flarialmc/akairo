@@ -12,7 +12,6 @@ namespace akairo
         switch (backend) {
             case Graphics::BackendType::oOpenGL: {
                 graphics[name] = std::make_shared<Graphics::OpenGL>(Width, Height);
-                std::cout << "Created ImGui renderer with name: " << name << " " << graphics[name] << std::endl;
                 break;
             }
             case Graphics::UndefinedBackend: break;

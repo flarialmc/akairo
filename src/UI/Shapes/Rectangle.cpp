@@ -11,4 +11,33 @@ namespace akairo::Shapes {
         if (renderer) renderer->DrawRectangle(position, size, color);
         else std::cout << "Renderer is not set for Rectangle: " << name << std::endl;
     }
+
+    void Rectangle::Update(Vec2 stuff)
+    {
+        const BoundingRect ParentBounds = BoundingRect(this->position.ProperPosition, this->position.ProperPosition + stuff);
+        this->position.Bind(ParentBounds);
+        this->size.Bind(ParentBounds);
+
+        this->size.Update();
+        this->position.Update();
+
+    }
+
+    void Rectangle::Update()
+    {
+        if (parent)
+        {
+            const BoundingRect ParentBounds = BoundingRect(parent->position.ProperPosition, parent->position.ProperPosition + parent->size.ProperSize);
+
+            this->position.Bind(ParentBounds);
+            this->size.Bind(ParentBounds);
+        }
+        this->size.Update();
+        this->position.Update();
+
+        for (auto& child : children)
+        {
+            child->Update();
+        }
+    }
 }

@@ -6,5 +6,7 @@ namespace akairo::Shapes {
     public:
         Rectangle(const std::string& name, const Components::Position& position, const Components::Size& size, const std::shared_ptr<Renderer::Interface>& renderer, Components::Color color);
         void Draw() override;
+        void Update() override;
+        void Update(Vec2 stuff) override;
     };
 }

@@ -21,7 +21,7 @@ akairo::Components::Position::Position()
 }
 
 
-void akairo::Components::Position::Parentize(BoundingRect ParentRect)
+void akairo::Components::Position::Bind(BoundingRect ParentRect)
 {
     this->Parent = ParentRect;
     Update();

@@ -12,39 +12,12 @@ namespace akairo
         std::erase(children, child);
     }
 
-    void Element::Parentize(std::shared_ptr<Element> Parent)
+    void Element::Bind(std::shared_ptr<Element> Parent)
     {
         this->parent = std::move(Parent);
     }
 
-    void Element::Update(Vec2 stuff)
-    {
-        const BoundingRect ParentBounds = BoundingRect(this->position.ProperPosition, this->position.ProperPosition + stuff);
-        this->position.Parentize(ParentBounds);
-        this->size.Bind(ParentBounds);
 
-        this->size.Update();
-        this->position.Update();
-
-    }
-
-    void Element::Update()
-    {
-        if (parent)
-        {
-            const BoundingRect ParentBounds = BoundingRect(parent->position.ProperPosition, parent->position.ProperPosition + parent->size.ProperSize);
-
-            this->position.Parentize(ParentBounds);
-            this->size.Bind(ParentBounds);
-        }
-        this->size.Update();
-        this->position.Update();
-
-        for (auto& child : children)
-        {
-            child->Update();
-        }
-    }
 
     std::shared_ptr<Renderer::Interface> Element::GetRenderer() const
     {

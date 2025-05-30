@@ -44,7 +44,6 @@ namespace akairo::Graphics {
                      * It will create a rectangle and draw it.
                      */
 
-
                     /*
                     auto rect = renderers[name]->CreateElement<Shapes::Rectangle>(
                       "base rectangle", Components::Position(0.5f, {}));
