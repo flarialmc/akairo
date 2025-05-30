@@ -42,7 +42,7 @@ namespace akairo
         void Parentize(std::shared_ptr<Element> Parent); //Changes the parent or adds the parent to this element
         virtual void Update() {};
         virtual void Update(Vec2 stuff) {};
-
+        virtual void Draw() = 0;
         [[nodiscard]] std::shared_ptr<Renderer::Interface> GetRenderer() const;
 
         std::string name;

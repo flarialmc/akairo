@@ -51,6 +51,11 @@ namespace akairo::Renderer {
         virtual void DrawRectangle(Components::Position pos, Components::Size size, Components::Color color) const = 0;
         virtual void DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const = 0;
         virtual void DrawCircle(Components::Position pos, float radius, Components::Color color) const = 0;
+
+        /*
+         * In the future, elements map will need to be stored in Graphics.
+         * Because, we may need to swap between multiple renderers such as D2D & ImGUI.
+         */
         std::unordered_map<std::string, std::shared_ptr<Element>> elements;
         virtual void Render(const std::function<void()>& func) = 0;
 
