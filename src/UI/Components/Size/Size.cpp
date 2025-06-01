@@ -50,7 +50,6 @@ namespace akairo::Components
         {
             ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft);
         }
-        std::cout << "Size updated to: " << ProperSize.x << ", " << ProperSize.y << std::endl;
     }
 
     void Size::Update(Vec2 Size)

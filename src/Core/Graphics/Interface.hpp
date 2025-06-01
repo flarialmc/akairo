@@ -37,7 +37,6 @@ namespace akairo::Graphics {
             case Renderer::FrameworkType::ImGUI:
                 {
                     renderers[name] = std::make_shared<Renderer::ImGui>(backend, Width, Height);
-                    std::cout << "Created ImGui renderer with name: " << name << " " << renderers[name] << std::endl;
                     break;
                     /*
                      * This is a test to see if the renderer is working.

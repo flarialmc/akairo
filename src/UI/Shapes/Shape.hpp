@@ -16,12 +16,11 @@ namespace akairo::Shapes {
     public:
         ~Shape() override = default;
 
-        Components::Color com_color = {};
-
         Shape(std::string name, const Components::Position& position, const Components::Size& size, Components::Color color, const std::shared_ptr<Renderer::Interface>& renderer);
         explicit Shape(const std::string& name, const std::shared_ptr<Renderer::Interface>& renderer);
         void UpdateShape(const Components::Position& position, const Components::Size& size, Components::Color color, std::shared_ptr<Renderer::Interface> renderer);
 
+        Components::Color com_color = {};
         virtual Shape& color(const std::string& hex, int alpha)  { return *this; };
         virtual Shape& color(int r, int g, int b, int a)  { return *this; };
     };

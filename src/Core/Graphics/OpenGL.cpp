@@ -50,7 +50,6 @@ namespace akairo::Graphics
             {
                 if (element->parent)
                 {
-                    std::cout << "Updating element: " << name << " with parent: " << element->parent->name << std::endl;
                     element->Update();
                 }
             }
