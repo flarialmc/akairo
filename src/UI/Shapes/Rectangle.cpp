@@ -7,7 +7,10 @@ namespace akairo::Shapes {
     Rectangle::Rectangle(const std::string& name, const Components::Position& position, const Components::Size& size, const std::shared_ptr<Renderer::Interface>& renderer, const Components::Color color)
     : Shape(name, position, size, color, renderer) {}
 
-    Rectangle::Rectangle(const std::string& name, const std::shared_ptr<Renderer::Interface>& renderer): Shape(name, renderer){}
+    Rectangle::Rectangle(const std::string& name, const std::shared_ptr<Renderer::Interface>& renderer): Shape(name, renderer)
+    {
+        this->Update({static_cast<float>(renderer->Width), static_cast<float>(renderer->Height)});
+    }
 
 
     void Rectangle::Draw() {

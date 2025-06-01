@@ -29,14 +29,14 @@ namespace akairo::Graphics {
         int Height{};
 
         std::unordered_map<std::string, std::shared_ptr<Renderer::Interface>> renderers;
-        bool CreateRenderer(const std::string& name, Renderer::BackendType backend, Renderer::FrameworkType framework, int Width, int Height) {
+        bool CreateRenderer(const std::string& name, Renderer::BackendType backend, Renderer::FrameworkType framework) {
 
             if (renderers.find(name) != renderers.end()) return false;
 
             switch (framework) {
             case Renderer::FrameworkType::ImGUI:
                 {
-                    renderers[name] = std::make_shared<Renderer::ImGui>(backend);
+                    renderers[name] = std::make_shared<Renderer::ImGui>(backend, Width, Height);
                     std::cout << "Created ImGui renderer with name: " << name << " " << renderers[name] << std::endl;
                     break;
                     /*

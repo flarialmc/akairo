@@ -41,9 +41,12 @@ namespace akairo::Renderer {
         virtual ~Interface() = default;
         BackendType backendType = OpenGL;
 
-        explicit Interface(const BackendType backend) {
+        explicit Interface(const BackendType backend, int width, int height) {
             this->backendType = backend;
+            this->Width = width;
+            this->Height = height;
           }
+        int Width, Height;
 
         /*
          * This is an abstraction function that differs between renderers. For example,

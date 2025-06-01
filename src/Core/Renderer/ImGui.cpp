@@ -14,10 +14,9 @@
 
 namespace akairo::Renderer
 {
-    ImGui::ImGui(BackendType backend): Interface(backend)
+    ImGui::ImGui(BackendType backend, int width, int height): Interface(backend, width, height)
     {
         this->backendType = backend;
-
         this->context = ::ImGui::CreateContext();
         ::ImGui::SetCurrentContext(context);
 

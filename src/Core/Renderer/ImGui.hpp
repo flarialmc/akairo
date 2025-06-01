@@ -12,7 +12,7 @@ namespace akairo::Renderer {
         ImGuiContext* context{};
 
     public:
-        explicit ImGui(BackendType backend);
+        explicit ImGui(BackendType backend, int width, int height);
         ~ImGui() override = default;
         void DrawRectangle(Components::Position pos, Components::Size size, Components::Color color) const override;
         void DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const override;
