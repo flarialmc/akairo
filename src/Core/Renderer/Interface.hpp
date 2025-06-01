@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+#include <map>
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -40,7 +41,7 @@ namespace akairo::Renderer {
         virtual ~Interface() = default;
         BackendType backendType = OpenGL;
 
-        explicit Interface(BackendType backend) {
+        explicit Interface(const BackendType backend) {
             this->backendType = backend;
           }
 
@@ -53,31 +54,25 @@ namespace akairo::Renderer {
         virtual void DrawCircle(Components::Position pos, float radius, Components::Color color) const = 0;
 
         /*
-         * In the future, elements map will need to be stored in Graphics.
-         * Because, we may need to swap between multiple renderers such as D2D & ImGUI.
-         */
-        std::unordered_map<std::string, std::shared_ptr<Element>> elements;
+        * In the future, elements map will need to be stored in Graphics.
+        * Because, we may need to swap between multiple renderers such as D2D & ImGUI.
+        */
+        std::map<std::string, std::shared_ptr<Element>> elements;
         virtual void Render(const std::function<void()>& func) = 0;
 
         /*
-         * Creates an element, with a name, that you can modify as you wish.
+         * This registers an element you have built, and want to render.
          * This is stored in the elements map. The renderer iterates through these elements
-         * Then renders it in a Retained mode, ordered style.
+         * Then renders it in a Retained mode, ordered style, when called by Renderer::Interface->Render().
          */
-        template<typename T, typename... Args>
-        std::shared_ptr<T> CreateElement(const std::string& name, Args&&... args) {
+        template<typename T>
+        void RegisterElement(const std::string& name, std::shared_ptr<T> element) {
             auto it = elements.find(name);
             if (it != elements.end()) {
-                auto typedElement = std::dynamic_pointer_cast<T>(it->second);
-                if (!typedElement) {
-                    throw std::runtime_error("Element '" + name + "' exists but is of incompatible type");
-                }
-                return typedElement;
+                throw std::runtime_error("Element '" + name + "' is already registered");
             }
 
-            auto element = std::make_shared<T>(name, std::forward<Args>(args)...);
             elements[name] = element;
-            return element;
         }
 
         /*
@@ -86,8 +81,7 @@ namespace akairo::Renderer {
          */
         template<typename T>
         std::shared_ptr<T> GetElement(const std::string& name) {
-            auto it = elements.find(name);
-            if (it != elements.end()) {
+            if (const auto it = elements.find(name); it != elements.end()) {
                 return std::dynamic_pointer_cast<T>(it->second);
             }
             return nullptr;

@@ -37,9 +37,9 @@ namespace akairo
             this->renderer = renderer;
         }
 
-        void AddChild(std::shared_ptr<Element> child); //Adds child to the list
-        void RemoveChild(const std::shared_ptr<Element>& child); //Removes child
-        void Parentize(std::shared_ptr<Element> Parent); //Changes the parent or adds the parent to this element
+        void AddChild(std::shared_ptr<Element> child);
+        void RemoveChild(const std::shared_ptr<Element>& child);
+        void Bind(std::shared_ptr<Element> Parent);
         virtual void Update() {};
         virtual void Update(Vec2 stuff) {};
         virtual void Draw() = 0;
@@ -50,10 +50,33 @@ namespace akairo
         std::vector<std::shared_ptr<Element>> children;
         std::shared_ptr<Renderer::Interface> renderer;
 
-        Components::Position position;
-        Components::Size size;
+        Components::Position com_position;
+        Components::Size com_size;
 
         bool Drawable = false;
 
+        Element& position(const Vec2 pos) {
+            this->com_position.Update(pos);
+            return *this;
+        }
+
+        Element& size(const Vec2 size)
+        {
+            this->com_size.Update(size);
+            return *this;
+
+        }
+
+        Element&  width(const float width)
+        {
+            this->com_size.Update(Vec2(width, this->com_size.SizeConstraints.y));
+            return *this;
+        }
+
+        Element& height(const float height)
+        {
+            this->com_size.Update(Vec2(this->com_size.SizeConstraints.x, height));
+            return *this;
+        }
     };
 }

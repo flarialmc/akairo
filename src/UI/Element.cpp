@@ -12,7 +12,7 @@ namespace akairo
         std::erase(children, child);
     }
 
-    void Element::Parentize(std::shared_ptr<Element> Parent)
+    void Element::Bind(std::shared_ptr<Element> Parent)
     {
         this->parent = std::move(Parent);
     }

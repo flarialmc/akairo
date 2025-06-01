@@ -7,16 +7,19 @@ namespace akairo::Shapes {
     Rectangle::Rectangle(const std::string& name, const Components::Position& position, const Components::Size& size, const std::shared_ptr<Renderer::Interface>& renderer, const Components::Color color)
     : Shape(name, position, size, color, renderer) {}
 
+    Rectangle::Rectangle(const std::string& name, const std::shared_ptr<Renderer::Interface>& renderer): Shape(name, renderer){}
+
+
     void Rectangle::Draw() {
-        if (renderer) renderer->DrawRectangle(position, size, color);
+        if (renderer) renderer->DrawRectangle(com_position, com_size, com_color);
         else std::cout << "Renderer is not set for Rectangle: " << name << std::endl;
     }
 
     void Rectangle::Update(Vec2 stuff)
     {
-        BoundingRect ParentBounds = BoundingRect(this->position.ProperPosition, this->position.ProperPosition + stuff);
-        this->position.Parentize(ParentBounds);
-        this->size.Bind(ParentBounds);
+        BoundingRect ParentBounds = BoundingRect(this->com_position.ProperPosition, this->com_position.ProperPosition + stuff);
+        this->com_position.Bind(ParentBounds);
+        this->com_size.Bind(ParentBounds);
 
     }
 
@@ -24,13 +27,13 @@ namespace akairo::Shapes {
     {
         if (parent)
         {
-            const BoundingRect ParentBounds = BoundingRect(parent->position.ProperPosition, parent->position.ProperPosition + parent->size.ProperSize);
+            const BoundingRect ParentBounds = BoundingRect(parent->com_position.ProperPosition, parent->com_position.ProperPosition + parent->com_size.ProperSize);
 
-            this->position.Parentize(ParentBounds);
-            this->size.Bind(ParentBounds);
+            this->com_position.Bind(ParentBounds);
+            this->com_position.Bind(ParentBounds);
         }
-        this->size.Update();
-        this->position.Update();
+        this->com_position.Update();
+        this->com_size.Update();
 
         for (auto& child : children)
         {

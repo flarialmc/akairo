@@ -13,7 +13,7 @@ namespace akairo::Components {
 
         Size(Vec2 Size, BoundingRect ParentRect, bool WidthDependsOnHeight = false);
         Size();
-        void Bind(BoundingRect Bounds);
+        void Bind(const BoundingRect& Bounds);
         void Update();
         void Update(Vec2 Size);
     };

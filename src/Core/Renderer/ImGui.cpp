@@ -8,6 +8,7 @@
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_win32.h>
 #include <memory>
+#include <ranges>
 #include <Core/Graphics/OpenGL.hpp>
 #include <UI/Element.hpp>
 
@@ -35,14 +36,14 @@ namespace akairo::Renderer
     {
         switch (backendType)
         {
-        case BackendType::OpenGL:
+        case OpenGL:
             {
                 ImGui_ImplOpenGL3_NewFrame();
                 ImGui_ImplWin32_NewFrame();
                 ::ImGui::NewFrame();
 
                 extra();
-                for (auto& [name, element] : elements)
+                for (const auto& element : elements | std::views::values)
                 {
                     if (element->Drawable) element->Draw();
                 }

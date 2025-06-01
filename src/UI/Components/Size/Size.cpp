@@ -3,65 +3,68 @@
 #include <iostream>
 #include <ostream>
 
-akairo::Components::Size::Size(Vec2 Size, BoundingRect Bounds, bool WidthDependsOnHeight)
+namespace akairo::Components
 {
-    this->WidthDependsOnHeight = WidthDependsOnHeight;
-    SizeConstraints = Size;
-    this->Bounds = Bounds;
-
-    Vec2 Constraint = Vec2(Size.x, Size.y)/100.f;
-
-    if (WidthDependsOnHeight)
+    Size::Size(Vec2 Size, BoundingRect Bounds, bool WidthDependsOnHeight)
     {
-        ProperSize = Constraint * (Bounds.BottomRight - Bounds.TopLeft).y;
+        this->WidthDependsOnHeight = WidthDependsOnHeight;
+        SizeConstraints = Size;
+        this->Bounds = Bounds;
+
+        Vec2 Constraint = Vec2(Size.x, Size.y)/100.f;
+
+        if (WidthDependsOnHeight)
+        {
+            ProperSize = Constraint * (Bounds.BottomRight - Bounds.TopLeft).y;
+        }
+        else
+        {
+            ProperSize = Constraint * (Bounds.BottomRight - Bounds.TopLeft);
+        }
     }
-    else
+
+    Size::Size()
     {
-        ProperSize = Constraint * (Bounds.BottomRight - Bounds.TopLeft);
+        this->WidthDependsOnHeight = false;
+        this->ProperSize = Vec2();
+        this->SizeConstraints = Vec2();
+        this->Bounds = BoundingRect();
     }
-}
-
-akairo::Components::Size::Size()
-{
-    this->WidthDependsOnHeight = false;
-    this->ProperSize = Vec2();
-    this->SizeConstraints = Vec2();
-    this->Bounds = BoundingRect();
-}
 
 
-void akairo::Components::Size::Bind(BoundingRect Bounds)
-{
-    this->Bounds = Bounds;
-    Update();
-}
-
-void akairo::Components::Size::Update()
-{
-    Vec2 Constraint = Vec2(this->SizeConstraints.x, this->SizeConstraints.y)/100.f;
-
-    if (WidthDependsOnHeight)
+    void Size::Bind(const BoundingRect& Bounds)
     {
-        ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft).y;
+        this->Bounds = Bounds;
+        Update();
     }
-    else
-    {
-        ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft);
-    }
-    std::cout << "Size updated to: " << ProperSize.x << ", " << ProperSize.y << std::endl;
-}
 
-void akairo::Components::Size::Update(Vec2 Size)
-{
-    SizeConstraints = Size;
-    Vec2 Constraint = Vec2(this->SizeConstraints.x, this->SizeConstraints.y)/100.f;
+    void Size::Update()
+    {
+        Vec2 Constraint = Vec2(this->SizeConstraints.x, this->SizeConstraints.y)/100.f;
 
-    if (WidthDependsOnHeight)
-    {
-        ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft).y;
+        if (WidthDependsOnHeight)
+        {
+            ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft).y;
+        }
+        else
+        {
+            ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft);
+        }
+        std::cout << "Size updated to: " << ProperSize.x << ", " << ProperSize.y << std::endl;
     }
-    else
+
+    void Size::Update(Vec2 Size)
     {
-        ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft);
+        SizeConstraints = Size;
+        Vec2 Constraint = Vec2(this->SizeConstraints.x, this->SizeConstraints.y)/100.f;
+
+        if (WidthDependsOnHeight)
+        {
+            ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft).y;
+        }
+        else
+        {
+            ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft);
+        }
     }
 }

@@ -13,8 +13,14 @@ namespace akairo::Shapes {
          * Or maybe, move to a builder system for better readability and usability.
          */
         Rectangle(const std::string& name, const Components::Position& position, const Components::Size& size, const std::shared_ptr<Renderer::Interface>& renderer, Components::Color color);
+        Rectangle(const std::string& name, const std::shared_ptr<Renderer::Interface>& renderer);
         void Draw() override;
         void Update() override;
         void Update(Vec2 stuff) override;
+        std::shared_ptr<Rectangle> build()
+        {
+            return std::make_shared<Rectangle>(*this);
+        }
+
     };
 }
