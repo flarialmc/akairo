@@ -9,7 +9,7 @@ namespace akairo::Shapes
     {
         this->com_position = position;
         this->com_size = size;
-        this->color = color;
+        this->com_color = color;
         this->renderer = renderer;
     }
     Shape::Shape(const std::string& name, const std::shared_ptr<Renderer::Interface>& renderer): Element(name, renderer)
@@ -21,7 +21,7 @@ namespace akairo::Shapes
     {
         this->com_position = position;
         this->com_size = size;
-        this->color = color;
+        this->com_color = color;
         this->renderer = std::move(renderer);
     }
 }
