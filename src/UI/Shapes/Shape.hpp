@@ -17,7 +17,6 @@ namespace akairo::Shapes {
         ~Shape() override = default;
 
         Components::Color com_color = {};
-        std::shared_ptr<Renderer::Interface> renderer;
 
         Shape(std::string name, const Components::Position& position, const Components::Size& size, Components::Color color, const std::shared_ptr<Renderer::Interface>& renderer);
         explicit Shape(const std::string& name, const std::shared_ptr<Renderer::Interface>& renderer);

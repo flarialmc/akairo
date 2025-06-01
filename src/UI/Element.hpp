@@ -32,10 +32,7 @@ namespace akairo
         virtual ~Element() = default;
 
         Element(std::string name, const std::shared_ptr<Renderer::Interface>& renderer)
-            : name(std::move(name)), renderer(renderer)
-        {
-            this->renderer = renderer;
-        }
+            : name(std::move(name)), renderer(renderer) {}
 
         void AddChild(std::shared_ptr<Element> child);
         void RemoveChild(const std::shared_ptr<Element>& child);
