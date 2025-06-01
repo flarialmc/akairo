@@ -17,6 +17,38 @@ namespace akairo::Shapes {
         void Draw() override;
         void Update() override;
         void Update(Vec2 stuff) override;
+
+        Rectangle& position(const Vec2 pos) override
+        {
+            this->com_position.Update(pos);
+            return *this;
+        }
+
+        Rectangle& size(const Vec2 size) override {
+            this->com_size.Update(size);
+            return *this;
+        }
+
+        Rectangle& width(const float w) override {
+            this->com_size.Update(Vec2(w, this->com_size.SizeConstraints.y));
+            return *this;
+        }
+
+        Rectangle& height(const float h) override {
+            this->com_size.Update(Vec2(this->com_size.SizeConstraints.x, h));
+            return *this;
+        }
+
+        Rectangle& color(const std::string& hex, const int alpha) override {
+            this->com_color = Components::Color(hex, alpha);
+            return *this;
+        }
+
+        Rectangle& color(const int r, const int g, const int b, const int a) override {
+            this->com_color = Components::Color(r, g, b, a);
+            return *this;
+        }
+
         std::shared_ptr<Rectangle> build()
         {
             return std::make_shared<Rectangle>(*this);

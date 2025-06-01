@@ -23,16 +23,7 @@ namespace akairo::Shapes {
         explicit Shape(const std::string& name, const std::shared_ptr<Renderer::Interface>& renderer);
         void UpdateShape(const Components::Position& position, const Components::Size& size, Components::Color color, std::shared_ptr<Renderer::Interface> renderer);
 
-        Element& color(const std::string& hex, int alpha)
-        {
-            this->com_color = Components::Color(hex, alpha);
-            return *this;
-        }
-
-        Element& color(int r, int g, int b, int a)
-        {
-            this->com_color = Components::Color(r, g, b, a);
-            return *this;
-        }
+        virtual Shape& color(const std::string& hex, int alpha);
+        virtual Shape& color(int r, int g, int b, int a);
     };
 }
