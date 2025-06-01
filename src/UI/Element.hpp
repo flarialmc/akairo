@@ -55,10 +55,10 @@ namespace akairo
 
         bool Drawable = false;
 
-        virtual Element& position(const Vec2 pos) {};
-        virtual Element& size(const Vec2 size) {};
-        virtual Element&  width(const float width) {};
+        virtual Element& position(const Vec2 pos) { return *this; };
+        virtual Element& size(const Vec2 size)  { return *this; };
+        virtual Element&  width(const float width)  { return *this; };
 
-        virtual Element& height(float height) {};
+        virtual Element& height(float height)  { return *this; };
     };
 }
