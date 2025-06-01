@@ -50,7 +50,7 @@ namespace akairo
         Components::Position com_position;
         Components::Size com_size;
 
-        bool Drawable = false;
+        bool Visible = false;
 
         virtual Element& position(const Vec2 pos) { return *this; };
         virtual Element& size(const Vec2 size)  { return *this; };

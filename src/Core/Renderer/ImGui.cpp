@@ -44,7 +44,7 @@ namespace akairo::Renderer
                 extra();
                 for (const auto& element : elements | std::views::values)
                 {
-                    if (element->Drawable) element->Draw();
+                    if (element->Visible) element->Draw();
                 }
 
                 ::ImGui::EndFrame();
