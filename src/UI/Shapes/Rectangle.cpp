@@ -36,7 +36,7 @@ namespace akairo::Shapes {
         }
         this->com_position.Update();
         this->com_size.Update();
-        this->com_rounding.Update(ParentBounds.BottomRight.y);
+        this->com_rounding.Update(ParentBounds.TopLeft.x + ParentBounds.BottomRight.x);
 
         for (auto& child : children)
         {
