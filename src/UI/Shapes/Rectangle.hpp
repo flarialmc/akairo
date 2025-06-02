@@ -14,7 +14,7 @@ namespace akairo::Shapes {
          * Rectangle(const std::string& name, Vec2 position, Vec2 size, const std::shared_ptr<Renderer::Interface>& renderer, const std::string& hexColor);
          * Or maybe, move to a builder system for better readability and usability.
          */
-        Components::Rounding com_rounding = {};
+        Components::Rounding com_rounding = {0.f, 0};
         Rectangle(const std::string& name, const Components::Position& position, const Components::Size& size, const std::shared_ptr<Renderer::Interface>& renderer, Components::Color color);
         Rectangle(const std::string& name, const std::shared_ptr<Renderer::Interface>& renderer);
         void Draw() override;
@@ -52,8 +52,13 @@ namespace akairo::Shapes {
             return *this;
         }
 
-        Rectangle& rounding(const float r) {
-            this->com_rounding = Components::Rounding(r);
+        Rectangle& rounding(const float r, const int scaler) {
+            this->com_rounding = Components::Rounding(r, scaler);
+            return *this;
+        }
+
+        Rectangle& rounding(const float tl, const float tr, const float bl, const float br, const int scaler) {
+            this->com_rounding = Components::Rounding(Vec4(tl, tr, bl, br), scaler);
             return *this;
         }
 

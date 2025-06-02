@@ -1,15 +1,20 @@
 #pragma once
 #include <string>
+#include <Utils/Vectors.hpp>
 
 namespace akairo::Components
 {
     class Rounding
     {
     public:
-        float TopLeft, TopRight, BottomLeft, BottomRight;
+        Vec4 roundingConstraints;
+        Vec4 properRounding;
+        int scaler;
 
-        Rounding();
-        explicit Rounding(float r);
-        Rounding(float tl, float tr, float bl, float br);
+        Rounding(int scaler);
+        Rounding(float r, int scaler);
+        Rounding(Vec4 r, int scaler);
+
+        void Update(int scaler);
     };
 }

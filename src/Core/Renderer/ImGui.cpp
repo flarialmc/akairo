@@ -64,10 +64,10 @@ namespace akairo::Renderer
         ::ImVec2 p_min = pos.ProperPosition.getImVec2();
         ::ImVec2 p_max = size.ProperSize.getImVec2();
 
-        float tl_rounding = ::ImMin(rounding.TopLeft, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
-        float tr_rounding = ::ImMin(rounding.TopRight, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
-        float bl_rounding = ::ImMin(rounding.BottomLeft, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
-        float br_rounding = ::ImMin(rounding.BottomRight, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
+        float tl_rounding = ::ImMin(rounding.properRounding.x, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
+        float tr_rounding = ::ImMin(rounding.properRounding.y, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
+        float bl_rounding = ::ImMin(rounding.properRounding.z, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
+        float br_rounding = ::ImMin(rounding.properRounding.w, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
 
         ::ImVec2 c_tl = ImVec2(p_min.x + tl_rounding, p_min.y + tl_rounding);
         ::ImVec2 c_tr = ImVec2(p_max.x - tr_rounding, p_min.y + tr_rounding);

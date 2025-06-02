@@ -23,20 +23,20 @@ namespace akairo::Shapes {
         BoundingRect ParentBounds = BoundingRect(this->com_position.ProperPosition, this->com_position.ProperPosition + stuff);
         this->com_position.Bind(ParentBounds);
         this->com_size.Bind(ParentBounds);
-
+        this->com_rounding.Update(stuff.y);
     }
 
     void Rectangle::Update()
     {
+        const auto ParentBounds = BoundingRect(parent->com_position.ProperPosition, parent->com_position.ProperPosition + parent->com_size.ProperSize);
         if (parent)
         {
-            const auto ParentBounds = BoundingRect(parent->com_position.ProperPosition, parent->com_position.ProperPosition + parent->com_size.ProperSize);
-
             this->com_position.Bind(ParentBounds);
             this->com_position.Bind(ParentBounds);
         }
         this->com_position.Update();
         this->com_size.Update();
+        this->com_rounding.Update(ParentBounds.BottomRight.y);
 
         for (auto& child : children)
         {
