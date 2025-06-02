@@ -11,7 +11,7 @@ namespace akairo::Components
         Vec4 properRounding;
         int scaler;
 
-        Rounding(int scaler);
+        explicit Rounding(int scaler);
         Rounding(float r, int scaler);
         Rounding(Vec4 r, int scaler);
 

@@ -49,11 +49,5 @@ namespace akairo
         Components::Size com_size;
 
         bool Visible = false;
-
-        virtual Element& position(const Vec2 pos) { return *this; };
-        virtual Element& size(const Vec2 size)  { return *this; };
-        virtual Element&  width(const float width)  { return *this; };
-
-        virtual Element& height(float height)  { return *this; };
     };
 }

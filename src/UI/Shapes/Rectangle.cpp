@@ -23,7 +23,7 @@ namespace akairo::Shapes {
         BoundingRect ParentBounds = BoundingRect(this->com_position.ProperPosition, this->com_position.ProperPosition + stuff);
         this->com_position.Bind(ParentBounds);
         this->com_size.Bind(ParentBounds);
-        this->com_rounding.Update(stuff.y);
+        this->com_rounding.Update(this->renderer->Width);
     }
 
     void Rectangle::Update()
@@ -36,7 +36,7 @@ namespace akairo::Shapes {
         }
         this->com_position.Update();
         this->com_size.Update();
-        this->com_rounding.Update(ParentBounds.TopLeft.x + ParentBounds.BottomRight.x);
+        this->com_rounding.Update(this->renderer->Width);
 
         for (auto& child : children)
         {

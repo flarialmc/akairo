@@ -12,7 +12,7 @@ namespace akairo
 }
 
 namespace akairo::Shapes {
-    class Shape : public Element {
+    class Shape : public Element{
     public:
         ~Shape() override = default;
 
@@ -21,7 +21,5 @@ namespace akairo::Shapes {
         void UpdateShape(const Components::Position& position, const Components::Size& size, Components::Color color, std::shared_ptr<Renderer::Interface> renderer);
 
         Components::Color com_color = {};
-        virtual Shape& color(const std::string& hex, int alpha)  { return *this; };
-        virtual Shape& color(int r, int g, int b, int a)  { return *this; };
     };
 }

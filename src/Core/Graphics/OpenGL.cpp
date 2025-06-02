@@ -38,6 +38,8 @@ namespace akairo::Graphics
         this->Height = Height;
         for (auto& r : renderers)
         {
+            r.second->Width = Width;
+            r.second->Height = Height;
             for (auto& [name, element] : r.second->elements)
             {
                 if (!element->parent)
