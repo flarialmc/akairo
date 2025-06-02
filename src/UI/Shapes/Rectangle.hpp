@@ -1,4 +1,6 @@
 #pragma once
+#include <UI/Components/Rounding/Rounding.hpp>
+
 #include "Shape.hpp"
 
 namespace akairo::Shapes {
@@ -12,6 +14,7 @@ namespace akairo::Shapes {
          * Rectangle(const std::string& name, Vec2 position, Vec2 size, const std::shared_ptr<Renderer::Interface>& renderer, const std::string& hexColor);
          * Or maybe, move to a builder system for better readability and usability.
          */
+        Components::Rounding com_rounding = {};
         Rectangle(const std::string& name, const Components::Position& position, const Components::Size& size, const std::shared_ptr<Renderer::Interface>& renderer, Components::Color color);
         Rectangle(const std::string& name, const std::shared_ptr<Renderer::Interface>& renderer);
         void Draw() override;
@@ -46,6 +49,11 @@ namespace akairo::Shapes {
 
         Rectangle& color(const int r, const int g, const int b, const int a) override {
             this->com_color = Components::Color(r, g, b, a);
+            return *this;
+        }
+
+        Rectangle& rounding(const float r) {
+            this->com_rounding = Components::Rounding(r);
             return *this;
         }
 

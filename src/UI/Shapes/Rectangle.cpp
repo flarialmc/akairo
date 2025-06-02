@@ -14,7 +14,7 @@ namespace akairo::Shapes {
 
 
     void Rectangle::Draw() {
-        if (renderer) renderer->DrawRectangle(com_position, com_size, com_color);
+        if (renderer) renderer->DrawRectangle(com_position, com_size, com_color, com_rounding);
         else std::cout << "Renderer is not set for Rectangle: " << name << std::endl;
     }
 

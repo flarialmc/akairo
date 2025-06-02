@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <UI/Components/Color/Color.hpp>
 #include <UI/Components/Position/Position.hpp>
+#include <UI/Components/Rounding/Rounding.hpp>
 #include <UI/Components/Size/Size.hpp>
 
 namespace akairo
@@ -52,7 +53,7 @@ namespace akairo::Renderer {
          * This is an abstraction function that differs between renderers. For example,
          * There could be D2D.. ImGUI.. Pure OpenGL.. or even DirectX11.
          */
-        virtual void DrawRectangle(Components::Position pos, Components::Size size, Components::Color color) const = 0;
+        virtual void DrawRectangle(Components::Position pos, Components::Size size, Components::Color color, Components::Rounding rounding) const = 0;
         virtual void DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const = 0;
         virtual void DrawCircle(Components::Position pos, float radius, Components::Color color) const = 0;
 
