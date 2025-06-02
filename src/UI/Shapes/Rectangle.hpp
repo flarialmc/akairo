@@ -4,6 +4,10 @@
 
 #include "Shape.hpp"
 
+
+#define RECTANGLE(name, renderer) \
+std::make_shared<akairo::Shapes::Rectangle>(name, renderer)
+
 namespace akairo::Shapes {
     class Rectangle final : public Shape, public std::enable_shared_from_this<Rectangle> {
     public:
