@@ -23,7 +23,7 @@ namespace akairo::Components
         this->r = this->g = this->b = this->a = 0;
     }
 
-    Color::Color(const std::string& hex, int a) {
+    Color::Color(const std::string& hex, const int a) {
         const char* ptr = hex.c_str();
 
         // Skip '#' if present

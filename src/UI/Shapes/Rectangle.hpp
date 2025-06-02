@@ -21,9 +21,9 @@ namespace akairo::Shapes {
         void Update() override;
         void Update(Vec2 stuff) override;
 
-        Rectangle& position(const Vec2 pos) override
+        Rectangle& position(const Vec2 constraints) override
         {
-            this->com_position.Update(pos);
+            this->com_position.Update(constraints);
             return *this;
         }
 

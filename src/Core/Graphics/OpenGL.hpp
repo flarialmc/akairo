@@ -8,6 +8,6 @@ namespace akairo::Graphics {
        ~OpenGL() override;
        bool Initialize(int Width, int Height) override;
        void Shutdown() override;
-        void Resize(int Width, int Height) override;
+       void Resize(int Width, int Height) override;
     };
 };

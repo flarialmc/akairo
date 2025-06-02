@@ -1,12 +1,10 @@
 #pragma once
-#include <iostream>
 #include <memory>
-#include <ostream>
 #include <utility>
 #include <vector>
 #include <string>
 
-#include "Components/Size/Size.hpp"
+
 #include "Core/Renderer/Interface.hpp"
 
 /*

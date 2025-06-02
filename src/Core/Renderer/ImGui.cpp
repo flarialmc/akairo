@@ -5,11 +5,11 @@
 
 #include "ImGui.hpp"
 
-#include <imgui.h>
+
 #include <imgui_impl_opengl3.h>
-#include <imgui_internal.h>
 #include <ranges>
 #include <imgui_impl_win32.h>
+#include <imgui_internal.h>
 #include <memory>
 #include <UI/Element.hpp>
 
@@ -59,22 +59,22 @@ namespace akairo::Renderer
             }
         }
     }
-    void ImGui::DrawRectangle(Components::Position pos, Components::Size size, Components::Color color, Components::Rounding rounding) const
+    void ImGui::DrawRectangle(const Components::Position pos, const Components::Size size, const Components::Color color, Components::Rounding rounding) const
     {
-        ImVec2<float> p_min = pos.ProperPosition.getImVec2();
-        ImVec2<float> p_max = size.ProperSize.getImVec2();
+        ::ImVec2 p_min = pos.ProperPosition.getImVec2();
+        ::ImVec2 p_max = size.ProperSize.getImVec2();
 
-        float tl_rounding = ImMin(rounding.TopLeft, ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
-        float tr_rounding = ImMin(rounding.TopRight, ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
-        float bl_rounding = ImMin(rounding.BottomLeft, ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
-        float br_rounding = ImMin(rounding.BottomRight, ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
+        float tl_rounding = ::ImMin(rounding.TopLeft, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
+        float tr_rounding = ::ImMin(rounding.TopRight, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
+        float bl_rounding = ::ImMin(rounding.BottomLeft, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
+        float br_rounding = ::ImMin(rounding.BottomRight, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
 
-        ImVec2 c_tl = ImVec2(p_min.x + tl_rounding, p_min.y + tl_rounding);
-        ImVec2 c_tr = ImVec2(p_max.x - tr_rounding, p_min.y + tr_rounding);
-        ImVec2 c_bl = ImVec2(p_min.x + bl_rounding, p_max.y - bl_rounding);
-        ImVec2 c_br = ImVec2(p_max.x - br_rounding, p_max.y - br_rounding);
+        ::ImVec2 c_tl = ImVec2(p_min.x + tl_rounding, p_min.y + tl_rounding);
+        ::ImVec2 c_tr = ImVec2(p_max.x - tr_rounding, p_min.y + tr_rounding);
+        ::ImVec2 c_bl = ImVec2(p_min.x + bl_rounding, p_max.y - bl_rounding);
+        ::ImVec2 c_br = ImVec2(p_max.x - br_rounding, p_max.y - br_rounding);
 
-        ImDrawList *draw_list = ::ImGui::GetBackgroundDrawList();
+        ::ImDrawList *draw_list = ::ImGui::GetBackgroundDrawList();
 
         draw_list->PathClear();
 

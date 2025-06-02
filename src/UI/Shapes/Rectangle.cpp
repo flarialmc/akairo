@@ -30,7 +30,7 @@ namespace akairo::Shapes {
     {
         if (parent)
         {
-            const BoundingRect ParentBounds = BoundingRect(parent->com_position.ProperPosition, parent->com_position.ProperPosition + parent->com_size.ProperSize);
+            const auto ParentBounds = BoundingRect(parent->com_position.ProperPosition, parent->com_position.ProperPosition + parent->com_size.ProperSize);
 
             this->com_position.Bind(ParentBounds);
             this->com_position.Bind(ParentBounds);
