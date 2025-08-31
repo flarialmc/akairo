@@ -25,7 +25,6 @@ namespace akairo::Components
 
     Size::Size()
     {
-        this->WidthDependsOnHeight = false;
         this->ProperSize = Vec2();
         this->SizeConstraints = Vec2();
         this->Bounds = BoundingRect();

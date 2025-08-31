@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <memory>
 #include <utility>
 #include <vector>
@@ -32,22 +33,46 @@ namespace akairo
         Element(std::string name, const std::shared_ptr<Renderer::Interface>& renderer)
             : name(std::move(name)), renderer(renderer) {}
 
-        void AddChild(std::shared_ptr<Element> child);
-        void RemoveChild(const std::shared_ptr<Element>& child);
+
         void Bind(std::shared_ptr<Element> Parent);
+
+        /*
+         * Call this function once you've modified the attributes of your Element,
+         * such as position, size, rounding, etc.
+         */
         virtual void Update() {};
-        virtual void Update(Vec2 stuff) {};
+
+        /*
+         * This function is called by Graphics to update every element
+         * letting them to resize due to window size change.
+         */
+        virtual void Update(Vec2 newbounds) { };
+
+        /*
+         * Draws the element! Duh.
+         */
         virtual void Draw() = 0;
         [[nodiscard]] std::shared_ptr<Renderer::Interface> GetRenderer() const;
 
+
+
         std::string name;
-        std::shared_ptr<Element> parent = nullptr;
+
+        /*
+        * Accessing the parent will be like:
+        * if (auto p = parent.lock()) // p is a shared_ptr
+        */
+        std::weak_ptr<Element> parent;
         std::vector<std::shared_ptr<Element>> children;
         std::shared_ptr<Renderer::Interface> renderer;
 
         Components::Position com_position;
         Components::Size com_size;
 
+        /* Basic Attributes */
+        bool Movable = false;
+        bool Scrollable = false;
+        bool Clip = false;
         bool Visible = false;
     };
 }

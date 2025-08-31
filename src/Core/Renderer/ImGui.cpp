@@ -59,58 +59,86 @@ namespace akairo::Renderer
             }
         }
     }
-    void ImGui::DrawRectangle(const Components::Position pos, const Components::Size size, const Components::Color color, Components::Rounding rounding) const
+
+    void ImGui::PushClipRect(const Components::Position& pos,
+                             const Components::Size& size,
+                             bool intersect_with_current = true)
     {
-        ::ImVec2 p_min = pos.ProperPosition.getImVec2();
-        ::ImVec2 p_max = size.ProperSize.getImVec2();
+        ImVec2 min = pos.ProperPosition.getImVec2();
+        ImVec2 max = (pos.ProperPosition + size.ProperSize).getImVec2();
 
-        float tl_rounding = ::ImMin(rounding.properRounding.x, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
-        float tr_rounding = ::ImMin(rounding.properRounding.y, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
-        float bl_rounding = ::ImMin(rounding.properRounding.z, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
-        float br_rounding = ::ImMin(rounding.properRounding.w, ::ImMin((p_max.x - p_min.x) * 0.5f, (p_max.y - p_min.y) * 0.5f));
-
-        ::ImVec2 c_tl = ImVec2(p_min.x + tl_rounding, p_min.y + tl_rounding);
-        ::ImVec2 c_tr = ImVec2(p_max.x - tr_rounding, p_min.y + tr_rounding);
-        ::ImVec2 c_bl = ImVec2(p_min.x + bl_rounding, p_max.y - bl_rounding);
-        ::ImVec2 c_br = ImVec2(p_max.x - br_rounding, p_max.y - br_rounding);
-
-        ::ImDrawList *draw_list = ::ImGui::GetBackgroundDrawList();
-
-        draw_list->PathClear();
-
-        // Top-left corner
-        if (tl_rounding > 0.0f) draw_list->PathArcTo(c_tl, tl_rounding, IM_PI * 1.0f, IM_PI * 1.5f, 10);
-            // 180 to 270 degrees
-        else draw_list->PathLineTo(p_min); // If no rounding, draw straight corner
-        draw_list->PathLineTo(ImVec2(c_tr.x, p_min.y));
-
-        // Top-right corner
-        if (tr_rounding > 0.0f) draw_list->PathArcTo(c_tr, tr_rounding, IM_PI * 1.5f, IM_PI * 2.0f, 10);
-            // 270 to 360 degrees
-        else draw_list->PathLineTo(ImVec2(p_max.x, p_min.y));
-        draw_list->PathLineTo(ImVec2(p_max.x, c_br.y));
-
-        // Bottom-right corner
-        if (br_rounding > 0.0f) draw_list->PathArcTo(c_br, br_rounding, IM_PI * 0.0f, IM_PI * 0.5f, 10);
-            // 0 to 90 degrees
-        else draw_list->PathLineTo(p_max);
-        draw_list->PathLineTo(ImVec2(c_bl.x, p_max.y));
-
-        // Bottom-left corner
-        if (bl_rounding > 0.0f) draw_list->PathArcTo(c_bl, bl_rounding, IM_PI * 0.5f, IM_PI * 1.0f, 10);
-            // 90 to 180 degrees
-        else draw_list->PathLineTo(ImVec2(p_min.x, p_max.y));
-        draw_list->PathLineTo(ImVec2(p_min.x, c_tl.y));
-
-        draw_list->PathFillConvex(color.toImColor()); // Fill the created path
-        // ::ImGui::GetBackgroundDrawList()->AddRectFilled(
-        // pos.ProperPosition.getImVec2(),
-        // size.ProperSize.getImVec2(),
-        // color.toImColor(),
-        // 0,
-        // 240
-        // );
+        ::ImGui::GetBackgroundDrawList()->PushClipRect(min, max);
     }
+
+    void ImGui::PopClipRect()
+    {
+        ::ImGui::GetBackgroundDrawList()->PopClipRect();
+    }
+ void ImGui::DrawRectangle(const Components::Position pos,
+                          const Components::Size size,
+                          const Components::Color color,
+                          Components::Rounding rounding) const
+{
+    const ::ImVec2 p0 = pos.ProperPosition.getImVec2();
+    const ::ImVec2 sz = size.ProperSize.getImVec2();
+
+    if (sz.x <= 0.0f || sz.y <= 0.0f)
+        return;
+
+    const ::ImVec2 p1(p0.x + sz.x, p0.y + sz.y);
+
+    const float w = sz.x;
+    const float h = sz.y;
+    const float rmax = ::ImMin(w, h) * 0.5f;
+
+    const float tl = ::ImMin(rounding.properRounding.x, rmax);
+    const float tr = ::ImMin(rounding.properRounding.y, rmax);
+    const float br = ::ImMin(rounding.properRounding.w, rmax);
+    const float bl = ::ImMin(rounding.properRounding.z, rmax);
+
+    ::ImDrawList* draw_list = ::ImGui::GetBackgroundDrawList();
+    draw_list->PathClear();
+
+    const int num_segments = 16; // More segments = smoother arcs
+
+    // Helper to generate a corner arc
+    auto add_arc = [&](const ImVec2& center, float radius, float a_min, float a_max) {
+        const float step = (a_max - a_min) / (float)num_segments;
+        for (int i = 0; i <= num_segments; ++i) {
+            float a = a_min + i * step;
+            draw_list->PathLineTo(ImVec2(center.x + cosf(a) * radius, center.y + sinf(a) * radius));
+        }
+    };
+
+    // Top-left corner
+    if (tl > 0.0f)
+        add_arc(ImVec2(p0.x + tl, p0.y + tl), tl, IM_PI, IM_PI * 1.5f);
+    else
+        draw_list->PathLineTo(p0);
+
+    // Top-right corner
+    if (tr > 0.0f)
+        add_arc(ImVec2(p1.x - tr, p0.y + tr), tr, IM_PI * 1.5f, IM_PI * 2.0f);
+    else
+        draw_list->PathLineTo(ImVec2(p1.x, p0.y));
+
+    // Bottom-right corner
+    if (br > 0.0f)
+        add_arc(ImVec2(p1.x - br, p1.y - br), br, 0.0f, IM_PI * 0.5f);
+    else
+        draw_list->PathLineTo(ImVec2(p1.x, p1.y));
+
+    // Bottom-left corner
+    if (bl > 0.0f)
+        add_arc(ImVec2(p0.x + bl, p1.y - bl), bl, IM_PI * 0.5f, IM_PI);
+    else
+        draw_list->PathLineTo(ImVec2(p0.x, p1.y));
+
+    // Fill the polygon (works for non-convex shapes too)
+    draw_list->PathFillConvex(color.toImColor());
+}
+
+
 
     void ImGui::DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const
     {

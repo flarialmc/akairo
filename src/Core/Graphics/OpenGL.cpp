@@ -42,17 +42,13 @@ namespace akairo::Graphics
             r.second->Height = Height;
             for (auto& [name, element] : r.second->elements)
             {
-                if (!element->parent)
+                if (!element->parent.lock())
                 {
                     element->Update(Vec2(Width, Height));
-                }
-            }
-
-            for (auto& [name, element] : r.second->elements)
-            {
-                if (element->parent)
+                } else
                 {
                     element->Update();
+
                 }
             }
         }

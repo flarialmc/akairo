@@ -1,9 +1,8 @@
 #pragma once
 #include <memory>
 #include <UI/Components/Rounding/Rounding.hpp>
-
 #include "Shape.hpp"
-
+#include <algorithm>
 
 #define RECTANGLE(name, renderer) \
 std::make_shared<akairo::Shapes::Rectangle>(name, renderer)
@@ -13,7 +12,6 @@ namespace akairo::Shapes {
     public:
         Components::Rounding com_rounding = { 0.f, 0 };
 
-        // Constructors remain as-is (no changes needed)
         Rectangle(
             const std::string& name,
             const Components::Position& position,
@@ -25,10 +23,10 @@ namespace akairo::Shapes {
 
         void Draw() override;
         void Update() override;
-        void Update(Vec2 stuff) override;
+        void Update(Vec2 newbounds) override;
 
         /*
-         * Builder system (now returning shared_ptr<Rectangle> instead of Rectangle&)
+         * Builder system (used to return Rectangle&)
          */
 
         std::shared_ptr<Rectangle> position(const Vec2 constraints) 
@@ -37,31 +35,31 @@ namespace akairo::Shapes {
             return shared_from_this();
         }
 
-        std::shared_ptr<Rectangle> size(const Vec2 size) 
+        std::shared_ptr<Rectangle> size(const Vec2 size)
         {
             this->com_size.Update(size);
             return shared_from_this();
         }
 
-        std::shared_ptr<Rectangle> width(const float w) 
+        std::shared_ptr<Rectangle> width(const float w)
         {
             this->com_size.Update(Vec2(w, this->com_size.SizeConstraints.y));
             return shared_from_this();
         }
 
-        std::shared_ptr<Rectangle> height(const float h) 
+        std::shared_ptr<Rectangle> height(const float h)
         {
             this->com_size.Update(Vec2(this->com_size.SizeConstraints.x, h));
             return shared_from_this();
         }
 
-        std::shared_ptr<Rectangle> color(const std::string& hex, const int alpha) 
+        std::shared_ptr<Rectangle> color(const std::string& hex, const int alpha)
         {
             this->com_color = Components::Color(hex, alpha);
             return shared_from_this();
         }
 
-        std::shared_ptr<Rectangle> color(const int r, const int g, const int b, const int a) 
+        std::shared_ptr<Rectangle> color(const int r, const int g, const int b, const int a)
         {
             this->com_color = Components::Color(r, g, b, a);
             return shared_from_this();
@@ -76,6 +74,46 @@ namespace akairo::Shapes {
         std::shared_ptr<Rectangle> rounding(const float tl, const float tr, const float bl, const float br)
         {
             this->com_rounding = Components::Rounding(Vec4(tl, tr, bl, br), this->renderer->Width);
+            return shared_from_this();
+        }
+
+        std::shared_ptr<Rectangle> visible(const bool r)
+        {
+            this->Visible = r;
+            return shared_from_this();
+        }
+
+        std::shared_ptr<Rectangle> clip(const bool r)
+        {
+            this->Clip = r;
+            return shared_from_this();
+        }
+
+        std::shared_ptr<Rectangle> movable(const bool r)
+        {
+            this->Movable = r;
+            return shared_from_this();
+        }
+
+        std::shared_ptr<Rectangle> scrollable(const bool r)
+        {
+            this->Scrollable = r;
+            return shared_from_this();
+        }
+
+
+        std::shared_ptr<Rectangle> addChild(std::shared_ptr<Element> child)
+        {
+            auto this_ = shared_from_this();
+            child->parent = this_;
+            children.push_back(std::move(child));
+
+            return this_;
+        }
+
+        std::shared_ptr<Rectangle> removeChild(const std::shared_ptr<Element>& child)
+        {
+            children.erase(std::remove(children.begin(), children.end(), child), children.end());
             return shared_from_this();
         }
     };
