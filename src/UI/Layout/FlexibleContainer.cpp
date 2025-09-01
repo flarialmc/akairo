@@ -17,25 +17,16 @@ namespace akairo::Layouts
     FlexibleContainer::~FlexibleContainer()
     = default;
 
-    void FlexibleContainer::remove(const std::string& name)
+    void FlexibleContainer::draw()
     {
-        this->children.erase(
-            std::remove_if(this->children.begin(), this->children.end(),
-                [&](const std::shared_ptr<Element>& e) { return e->name == name; }),
-            this->children.end()
-        );
-    }
-
-    void FlexibleContainer::Draw()
-    {
-        this->_body->Draw();
+        this->_body->draw();
         if (_overflowBehavior == HIDDEN) this->renderer->PushClipRect(_body->_position, _body->_size, true);
-        for (const auto& element : this->children) element->Draw();
+        for (const auto& element : this->children) element->draw();
         if (_overflowBehavior == HIDDEN) this->renderer->PopClipRect();
 
     }
 
-void FlexibleContainer::UpdateInternal(const Vec2& contentStart, const Vec2& contentSize) const
+void FlexibleContainer::updateInternal(const Vec2& contentStart, const Vec2& contentSize) const
 {
     BoundingRect childBounds(contentStart, contentStart + contentSize);
     Vec2 currentPos = contentStart;
@@ -51,12 +42,12 @@ void FlexibleContainer::UpdateInternal(const Vec2& contentStart, const Vec2& con
 
     for (auto& child : this->children)
     {
-        child->_position.Bind(childBounds);
-        child->_size.Bind(childBounds);
-        child->_size.Update();
+        child->_position.bind(childBounds);
+        child->_size.bind(childBounds);
+        child->_size.update();
 
         if (auto rect = dynamic_cast<Shapes::Rectangle*>(child.get())) {
-            rect->com_rounding.Update(rect->renderer->Height);
+            rect->_rounding.update(rect->renderer->Height);
         }
 
         Vec2 childSize = child->_size.size;
@@ -130,7 +121,7 @@ void FlexibleContainer::UpdateInternal(const Vec2& contentStart, const Vec2& con
         maxBottom = std::max(maxBottom, child->_position.position.y + childSize.y);
 
         for (auto& grandchild : child->children)
-            grandchild->Update();
+            grandchild->update();
     }
 
     // --- Compute needed size based on children ---
@@ -159,28 +150,28 @@ void FlexibleContainer::UpdateInternal(const Vec2& contentStart, const Vec2& con
 
 
 
-    void FlexibleContainer::Update(Vec2 newbounds)
+    void FlexibleContainer::update(Vec2 newbounds)
     {
         BoundingRect ParentBounds(
             this->_position.position,
             this->_position.position + newbounds
         );
 
-        this->_body->_position.Bind(ParentBounds);
-        this->_body->_size.Bind(ParentBounds);
-        this->_body->_position.Update();
-        this->_body->_size.Update();
+        this->_body->_position.bind(ParentBounds);
+        this->_body->_size.bind(ParentBounds);
+        this->_body->_position.update();
+        this->_body->_size.update();
 
         if (auto rect = dynamic_cast<Shapes::Rectangle*>(this->_body.get()))
-            rect->com_rounding.Update(rect->renderer->Height);
+            rect->_rounding.update(rect->renderer->Height);
 
         Vec2 contentStart = this->_body->_position.position + Vec2(_padding.x, _padding.y);
         Vec2 contentSize  = this->_body->_size.size - Vec2(_padding.x + _padding.z, _padding.y + _padding.w);
 
-        UpdateInternal(contentStart, contentSize);
+        updateInternal(contentStart, contentSize);
     }
 
-    void FlexibleContainer::Update()
+    void FlexibleContainer::update()
     {
 
         if (auto parent = this->parent.lock())
@@ -189,20 +180,20 @@ void FlexibleContainer::UpdateInternal(const Vec2& contentStart, const Vec2& con
                 parent->_position.position,
                 parent->_position.position + parent->_size.size
             );
-            this->_body->_position.Bind(ParentBounds);
-            this->_body->_size.Bind(ParentBounds);
+            this->_body->_position.bind(ParentBounds);
+            this->_body->_size.bind(ParentBounds);
         }
 
-        this->_body->_position.Update();
-        this->_body->_size.Update();
+        this->_body->_position.update();
+        this->_body->_size.update();
 
         if (auto rect = dynamic_cast<Shapes::Rectangle*>(this->_body.get()))
-            rect->com_rounding.Update(rect->renderer->Height);
+            rect->_rounding.update(rect->renderer->Height);
 
         Vec2 contentStart = this->_body->_position.position + Vec2(_padding.x, _padding.y);
         Vec2 contentSize  = this->_body->_size.size - Vec2(_padding.x + _padding.z, _padding.y + _padding.w);
 
-        UpdateInternal(contentStart, contentSize);
+        updateInternal(contentStart, contentSize);
     }
 }
 

@@ -9,18 +9,18 @@ namespace akairo::Shapes
     {
         this->_position = position;
         this->_size = size;
-        this->com_color = color;
+        this->_color = color;
     }
     Shape::Shape(const std::string& name, const std::shared_ptr<Renderer::Interface>& renderer): Element(name, renderer)
     {
         this->name = name;
     }
 
-    void Shape::UpdateShape(const Components::Position& position, const Components::Size& size, const Components::Color color, std::shared_ptr<Renderer::Interface> renderer)
+    void Shape::updateShape(const Components::Position& position, const Components::Size& size, const Components::Color color, std::shared_ptr<Renderer::Interface> renderer)
     {
         this->_position = position;
         this->_size = size;
-        this->com_color = color;
+        this->_color = color;
         this->renderer = std::move(renderer);
     }
 }

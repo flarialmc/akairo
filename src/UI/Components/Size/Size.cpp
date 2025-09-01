@@ -31,13 +31,13 @@ namespace akairo::Components
     }
 
 
-    void Size::Bind(const BoundingRect& Bounds)
+    void Size::bind(const BoundingRect& Bounds)
     {
         this->Bounds = Bounds;
-        Update();
+        update();
     }
 
-    void Size::Update()
+    void Size::update()
     {
         Vec2 Constraint = Vec2(this->constraints.x, this->constraints.y)/100.f;
 
@@ -51,7 +51,7 @@ namespace akairo::Components
         }
     }
 
-    void Size::Update(Vec2 Size)
+    void Size::update(Vec2 Size)
     {
         constraints = Size;
         Vec2 Constraint = Vec2(this->constraints.x, this->constraints.y)/100.f;

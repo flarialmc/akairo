@@ -15,6 +15,6 @@ namespace akairo::Components
         Rounding(float r, int scaler);
         Rounding(Vec4 r, int scaler);
 
-        void Update(int scaler);
+        void update(int scaler);
     };
 }

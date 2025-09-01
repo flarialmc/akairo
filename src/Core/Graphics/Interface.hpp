@@ -47,7 +47,7 @@ namespace akairo::Graphics {
                     /*
                     auto rect = renderers[name]->CreateElement<Shapes::Rectangle>(
                       "base rectangle", Components::Position(0.5f, {}));
-                    rect->Draw();
+                    rect->draw();
                     */
                 }
             case Renderer::FrameworkType::D2D: break;//renderers[name] = new OpenGL(backend);

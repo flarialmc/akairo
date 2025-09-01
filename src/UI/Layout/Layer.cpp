@@ -16,27 +16,28 @@ namespace akairo::Layouts
     Layer::~Layer()
     = default;
 
-    void Layer::Update()
+    void Layer::update()
     {
-        for (auto e : elements)
+        for (auto e : children)
         {
-            e.second->Update();
+            e->update();
         }
     }
 
-    void Layer::Update(Vec2 newbounds)
+    void Layer::update(Vec2 newbounds)
     {
-        for (auto e : elements)
+        for (auto e : children)
         {
-            e.second->Update(newbounds);
+            e->update(newbounds);
         }
     }
 
-    void Layer::Draw()
+    void Layer::draw()
     {
-        for (auto it = this->elements.begin(); it != this->elements.end(); ++it)
+
+        for (auto e : children)
         {
-            it->second->Draw();
+            e->draw();
         }
     }
 

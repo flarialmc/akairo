@@ -39,10 +39,12 @@ enum CONTAINER_OVERFLOW_BEHAVIOR {
  * TO DO: padding, auto sizing of elements
  */
 namespace akairo::Layouts {
-    class FlexibleContainer final : public Element, public std::enable_shared_from_this<FlexibleContainer> {
+    class FlexibleContainer : public Element{
     public:
         FlexibleContainer(std::string name, const std::shared_ptr<Renderer::Interface>& renderer, const std::shared_ptr<Element>& body);
         ~FlexibleContainer() override;
+
+        bool sterile = true;
 
         std::shared_ptr<Element> _body;
         Vec4 _padding;
@@ -51,54 +53,48 @@ namespace akairo::Layouts {
         CONTAINER_FLEX_BEHAVIOR _flexBehavior;
         CONTAINER_OVERFLOW_BEHAVIOR _overflowBehavior;
 
-        std::shared_ptr<FlexibleContainer> body(std::shared_ptr<Element> x)
-        {
-            this->_body = std::move(x);
-            return shared_from_this();
+        auto body(this auto& self, std::shared_ptr<Element> x) {
+            self._body = std::move(x);
+            using T = std::remove_cvref_t<decltype(self)>;
+            return std::static_pointer_cast<T>(self.shared_from_this());
         }
 
-        std::shared_ptr<FlexibleContainer> padding(Vec4 padding)
-        {
-            this->_padding = padding;
-            return shared_from_this();
+        auto padding(this auto& self, Vec4 padding) {
+            self._padding = padding;
+            using T = std::remove_cvref_t<decltype(self)>;
+            return std::static_pointer_cast<T>(self.shared_from_this());
         }
 
-        std::shared_ptr<FlexibleContainer> gap(Vec2 gap)
-        {
-            this->_gap = gap;
-            return shared_from_this();
+        auto gap(this auto& self, Vec2 gap) {
+            self._gap = gap;
+            using T = std::remove_cvref_t<decltype(self)>;
+            return std::static_pointer_cast<T>(self.shared_from_this());
         }
 
-        std::shared_ptr<FlexibleContainer> direction(CONTAINER_FLEX_DIRECTION direction)
-        {
-            this->_direction = direction;
-            return shared_from_this();
+        auto direction(this auto& self, CONTAINER_FLEX_DIRECTION direction) {
+            self._direction = direction;
+            using T = std::remove_cvref_t<decltype(self)>;
+            return std::static_pointer_cast<T>(self.shared_from_this());
         }
 
-        std::shared_ptr<FlexibleContainer> flexBehavior(CONTAINER_FLEX_BEHAVIOR behavior)
-        {
-            this->_flexBehavior = behavior;
-            return shared_from_this();
+        auto flexBehavior(this auto& self, CONTAINER_FLEX_BEHAVIOR behavior) {
+            self._flexBehavior = behavior;
+            using T = std::remove_cvref_t<decltype(self)>;
+            return std::static_pointer_cast<T>(self.shared_from_this());
         }
 
-        std::shared_ptr<FlexibleContainer> overflowBehavior(CONTAINER_OVERFLOW_BEHAVIOR behavior)
-        {
-            this->_overflowBehavior = behavior;
-            return shared_from_this();
+        auto overflowBehavior(this auto& self, CONTAINER_OVERFLOW_BEHAVIOR behavior) {
+            self._overflowBehavior = behavior;
+            using T = std::remove_cvref_t<decltype(self)>;
+            return std::static_pointer_cast<T>(self.shared_from_this());
         }
 
 
-        template<typename... Elems>
-        std::shared_ptr<FlexibleContainer> add(const std::shared_ptr<Element>& first, Elems&&... rest) {
-            children.push_back(first);
-            (children.push_back(std::forward<Elems>(rest)), ...); // fold expression
-            return shared_from_this();
-        }
         void remove(const std::string& name);
 
-        void Draw() override;
-        void UpdateInternal(const Vec2& contentStart, const Vec2& contentSize) const;
-        void Update() override;
-        void Update(Vec2 newbounds) override;
+        void draw() override;
+        void updateInternal(const Vec2& contentStart, const Vec2& contentSize) const;
+        void update() override;
+        void update(Vec2 newbounds) override;
     };
 }

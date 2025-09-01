@@ -12,19 +12,19 @@ namespace akairo::Shapes
 
     Rectangle::Rectangle(const std::string& name, const std::shared_ptr<Renderer::Interface>& renderer): Shape(name, renderer)
     {
-        this->Update({static_cast<float>(renderer->Width), static_cast<float>(renderer->Height)});
+        this->update({static_cast<float>(renderer->Width), static_cast<float>(renderer->Height)});
     }
 
 
-    void Rectangle::Draw() {
+    void Rectangle::draw() {
         if (renderer)
         {
-            renderer->DrawRectangle(_position, _size, com_color, com_rounding);
+            renderer->DrawRectangle(_position, _size, _color, _rounding);
             if (_clip) renderer->PushClipRect(_position, _size, true);
 
             for (const std::shared_ptr<Element>& x : children)
             {
-                x->Draw();
+                x->draw();
             }
 
             if (_clip) renderer->PopClipRect();
@@ -32,42 +32,42 @@ namespace akairo::Shapes
         else std::cout << "Renderer is not set for Rectangle: " << name << std::endl;
     }
 
-    void Rectangle::Update(Vec2 newbounds)
+    void Rectangle::update(Vec2 newbounds)
     {
         if (auto parent = this->parent.lock())
         {
             const auto ParentBounds = BoundingRect(parent->_position.position, parent->_position.position + parent->_size.size);
-            this->_position.Bind(ParentBounds);
-            this->_size.Bind(ParentBounds);
+            this->_position.bind(ParentBounds);
+            this->_size.bind(ParentBounds);
         } else
         {
             BoundingRect ParentBounds = BoundingRect({0, 0}, newbounds);
-            this->_position.Bind(ParentBounds);
-            this->_size.Bind(ParentBounds);
+            this->_position.bind(ParentBounds);
+            this->_size.bind(ParentBounds);
         }
-        this->com_rounding.Update(this->renderer->Height);
+        this->_rounding.update(this->renderer->Height);
 
         for (auto& child : children)
         {
-            child->Update();
+            child->update();
         }
     }
 
-    void Rectangle::Update()
+    void Rectangle::update()
     {
         if (auto parent = this->parent.lock())
         {
             const auto ParentBounds = BoundingRect(parent->_position.position, parent->_position.position + parent->_size.size);
-            this->_position.Bind(ParentBounds);
-            this->_size.Bind(ParentBounds);
+            this->_position.bind(ParentBounds);
+            this->_size.bind(ParentBounds);
         }
-        this->_position.Update();
-        this->_size.Update();
-        this->com_rounding.Update(this->renderer->Height);
+        this->_position.update();
+        this->_size.update();
+        this->_rounding.update(this->renderer->Height);
 
         for (auto& child : children)
         {
-            child->Update();
+            child->update();
         }
     }
 }

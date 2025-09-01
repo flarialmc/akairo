@@ -8,9 +8,9 @@
 std::make_shared<akairo::Shapes::Rectangle>(name, renderer)
 
 namespace akairo::Shapes {
-    class Rectangle final : public Shape, public std::enable_shared_from_this<Rectangle> {
+    class Rectangle final : public Shape {
     public:
-        Components::Rounding com_rounding = { 0.f, 0 };
+        Components::Rounding _rounding = { 0.f, 0 };
 
         Rectangle(
             const std::string& name,
@@ -21,100 +21,25 @@ namespace akairo::Shapes {
         );
         Rectangle(const std::string& name, const std::shared_ptr<Renderer::Interface>& renderer);
 
-        void Draw() override;
-        void Update() override;
-        void Update(Vec2 newbounds) override;
+        void draw() override;
+        void update() override;
+        void update(Vec2 newbounds) override;
 
         /*
          * Builder system (used to return Rectangle&)
          */
 
-        std::shared_ptr<Rectangle> position(const Vec2 constraints) 
-        {
-            this->_position.Update(constraints);
-            return shared_from_this();
-        }
-
-        std::shared_ptr<Rectangle> size(const Vec2 size)
-        {
-            this->_size.Update(size);
-            return shared_from_this();
-        }
-
-        std::shared_ptr<Rectangle> width(const float w)
-        {
-            this->_size.Update(Vec2(w, this->_size.constraints.y));
-            return shared_from_this();
-        }
-
-        std::shared_ptr<Rectangle> height(const float h)
-        {
-            this->_size.Update(Vec2(this->_size.constraints.x, h));
-            return shared_from_this();
-        }
-
-        std::shared_ptr<Rectangle> color(const std::string& hex, const int alpha)
-        {
-            this->com_color = Components::Color(hex, alpha);
-            return shared_from_this();
-        }
-
-        std::shared_ptr<Rectangle> color(const int r, const int g, const int b, const int a)
-        {
-            this->com_color = Components::Color(r, g, b, a);
-            return shared_from_this();
-        }
-
         std::shared_ptr<Rectangle> rounding(const float r)
         {
-            this->com_rounding = Components::Rounding(r, this->renderer->Width);
-            return shared_from_this();
+            this->_rounding = Components::Rounding(r, this->renderer->Width);
+            return std::static_pointer_cast<Rectangle>(shared_from_this());
         }
 
         std::shared_ptr<Rectangle> rounding(const float tl, const float tr, const float bl, const float br)
         {
-            this->com_rounding = Components::Rounding(Vec4(tl, tr, bl, br), this->renderer->Width);
-            return shared_from_this();
+            this->_rounding = Components::Rounding(Vec4(tl, tr, bl, br), this->renderer->Width);
+            return std::static_pointer_cast<Rectangle>(shared_from_this());
         }
 
-        std::shared_ptr<Rectangle> visible(const bool r)
-        {
-            this->_visible = r;
-            return shared_from_this();
-        }
-
-        std::shared_ptr<Rectangle> clip(const bool r)
-        {
-            this->_clip = r;
-            return shared_from_this();
-        }
-
-        std::shared_ptr<Rectangle> movable(const bool r)
-        {
-            this->_movable = r;
-            return shared_from_this();
-        }
-
-        std::shared_ptr<Rectangle> scrollable(const bool r)
-        {
-            this->_scrollable = r;
-            return shared_from_this();
-        }
-
-
-        std::shared_ptr<Rectangle> addChild(std::shared_ptr<Element> child)
-        {
-            auto this_ = shared_from_this();
-            child->parent = this_;
-            children.push_back(std::move(child));
-
-            return this_;
-        }
-
-        std::shared_ptr<Rectangle> removeChild(const std::shared_ptr<Element>& child)
-        {
-            children.erase(std::remove(children.begin(), children.end(), child), children.end());
-            return shared_from_this();
-        }
     };
 }

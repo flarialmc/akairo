@@ -45,10 +45,10 @@ namespace akairo::Graphics
             {
                 if (!element->parent.lock())
                 {
-                    element->Update(Vec2(static_cast<float>(Width), static_cast<float>(Height)));
+                    element->update(Vec2(static_cast<float>(Width), static_cast<float>(Height)));
                 } else
                 {
-                    element->Update();
+                    element->update();
 
                 }
             }

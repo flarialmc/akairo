@@ -48,7 +48,7 @@ namespace akairo::Components
         this->constraints.w = r.w;
     }
 
-    void Rounding::Update(int scaler) {
+    void Rounding::update(int scaler) {
         this->scaler = scaler;
         this->rounding.x = this->constraints.x / 100.f * scaler;
         this->rounding.y = this->constraints.y / 100.f * scaler;
