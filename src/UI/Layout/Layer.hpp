@@ -40,6 +40,6 @@ namespace akairo::Layouts
 
         void Draw() override;
         void Update() override;
-        virtual void Update(Vec2 newbounds) override;
+        void Update(Vec2 newbounds) override;
     };
 }

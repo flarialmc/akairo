@@ -31,25 +31,25 @@ namespace akairo::Shapes {
 
         std::shared_ptr<Rectangle> position(const Vec2 constraints) 
         {
-            this->com_position.Update(constraints);
+            this->_position.Update(constraints);
             return shared_from_this();
         }
 
         std::shared_ptr<Rectangle> size(const Vec2 size)
         {
-            this->com_size.Update(size);
+            this->_size.Update(size);
             return shared_from_this();
         }
 
         std::shared_ptr<Rectangle> width(const float w)
         {
-            this->com_size.Update(Vec2(w, this->com_size.SizeConstraints.y));
+            this->_size.Update(Vec2(w, this->_size.constraints.y));
             return shared_from_this();
         }
 
         std::shared_ptr<Rectangle> height(const float h)
         {
-            this->com_size.Update(Vec2(this->com_size.SizeConstraints.x, h));
+            this->_size.Update(Vec2(this->_size.constraints.x, h));
             return shared_from_this();
         }
 
@@ -79,25 +79,25 @@ namespace akairo::Shapes {
 
         std::shared_ptr<Rectangle> visible(const bool r)
         {
-            this->Visible = r;
+            this->_visible = r;
             return shared_from_this();
         }
 
         std::shared_ptr<Rectangle> clip(const bool r)
         {
-            this->Clip = r;
+            this->_clip = r;
             return shared_from_this();
         }
 
         std::shared_ptr<Rectangle> movable(const bool r)
         {
-            this->Movable = r;
+            this->_movable = r;
             return shared_from_this();
         }
 
         std::shared_ptr<Rectangle> scrollable(const bool r)
         {
-            this->Scrollable = r;
+            this->_scrollable = r;
             return shared_from_this();
         }
 

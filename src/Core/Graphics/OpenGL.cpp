@@ -2,6 +2,7 @@
 #include "OpenGL.hpp"
 
 #include <akairo.hpp>
+#include <ranges>
 #include <UI/Element.hpp>
 
 // TODO:
@@ -40,11 +41,11 @@ namespace akairo::Graphics
         {
             r.second->Width = Width;
             r.second->Height = Height;
-            for (auto& [name, element] : r.second->elements)
+            for (auto& element : r.second->elements | std::views::values)
             {
                 if (!element->parent.lock())
                 {
-                    element->Update(Vec2(Width, Height));
+                    element->Update(Vec2(static_cast<float>(Width), static_cast<float>(Height)));
                 } else
                 {
                     element->Update();

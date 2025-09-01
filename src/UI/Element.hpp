@@ -66,13 +66,13 @@ namespace akairo
         std::vector<std::shared_ptr<Element>> children;
         std::shared_ptr<Renderer::Interface> renderer;
 
-        Components::Position com_position;
-        Components::Size com_size;
+        Components::Position _position;
+        Components::Size _size;
 
         /* Basic Attributes */
-        bool Movable = false;
-        bool Scrollable = false;
-        bool Clip = false;
-        bool Visible = false;
+        bool _movable = false;
+        bool _scrollable = false;
+        bool _clip = false;
+        bool _visible = true;
     };
 }

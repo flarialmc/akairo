@@ -56,6 +56,8 @@ namespace akairo::Renderer {
         virtual void DrawRectangle(Components::Position pos, Components::Size size, Components::Color color, Components::Rounding rounding) const = 0;
         virtual void DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const = 0;
         virtual void DrawCircle(Components::Position pos, float radius, Components::Color color) const = 0;
+        virtual void PushClipRect(const Components::Position& pos, const Components::Size& size, bool intersect_with_current) = 0;
+        virtual void PopClipRect() = 0;
 
         /*
         * In the future, elements map will need to be stored in Graphics.

@@ -7,8 +7,8 @@ namespace akairo::Components
     class Rounding
     {
     public:
-        Vec4 roundingConstraints;
-        Vec4 properRounding;
+        Vec4 constraints;
+        Vec4 rounding;
         int scaler;
 
         explicit Rounding(int scaler);

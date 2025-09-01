@@ -19,15 +19,15 @@ namespace akairo::Shapes
     void Rectangle::Draw() {
         if (renderer)
         {
-            renderer->DrawRectangle(com_position, com_size, com_color, com_rounding);
-            auto r = dynamic_cast<Renderer::ImGui*>(renderer.get());
-            if (Clip && r) r->PushClipRect(com_position, com_size, true);
+            renderer->DrawRectangle(_position, _size, com_color, com_rounding);
+            if (_clip) renderer->PushClipRect(_position, _size, true);
 
             for (const std::shared_ptr<Element>& x : children)
             {
                 x->Draw();
             }
-            if (Clip && r) r->PopClipRect();
+
+            if (_clip) renderer->PopClipRect();
         }
         else std::cout << "Renderer is not set for Rectangle: " << name << std::endl;
     }
@@ -36,14 +36,14 @@ namespace akairo::Shapes
     {
         if (auto parent = this->parent.lock())
         {
-            const auto ParentBounds = BoundingRect(parent->com_position.ProperPosition, parent->com_position.ProperPosition + parent->com_size.ProperSize);
-            this->com_position.Bind(ParentBounds);
-            this->com_size.Bind(ParentBounds);
+            const auto ParentBounds = BoundingRect(parent->_position.position, parent->_position.position + parent->_size.size);
+            this->_position.Bind(ParentBounds);
+            this->_size.Bind(ParentBounds);
         } else
         {
             BoundingRect ParentBounds = BoundingRect({0, 0}, newbounds);
-            this->com_position.Bind(ParentBounds);
-            this->com_size.Bind(ParentBounds);
+            this->_position.Bind(ParentBounds);
+            this->_size.Bind(ParentBounds);
         }
         this->com_rounding.Update(this->renderer->Height);
 
@@ -57,12 +57,12 @@ namespace akairo::Shapes
     {
         if (auto parent = this->parent.lock())
         {
-            const auto ParentBounds = BoundingRect(parent->com_position.ProperPosition, parent->com_position.ProperPosition + parent->com_size.ProperSize);
-            this->com_position.Bind(ParentBounds);
-            this->com_size.Bind(ParentBounds);
+            const auto ParentBounds = BoundingRect(parent->_position.position, parent->_position.position + parent->_size.size);
+            this->_position.Bind(ParentBounds);
+            this->_size.Bind(ParentBounds);
         }
-        this->com_position.Update();
-        this->com_size.Update();
+        this->_position.Update();
+        this->_size.Update();
         this->com_rounding.Update(this->renderer->Height);
 
         for (auto& child : children)

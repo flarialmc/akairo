@@ -8,25 +8,25 @@ namespace akairo::Components
     Size::Size(Vec2 Size, BoundingRect Bounds, bool WidthDependsOnHeight)
     {
         this->WidthDependsOnHeight = WidthDependsOnHeight;
-        SizeConstraints = Size;
+        constraints = Size;
         this->Bounds = Bounds;
 
         Vec2 Constraint = Vec2(Size.x, Size.y)/100.f;
 
         if (WidthDependsOnHeight)
         {
-            ProperSize = Constraint * (Bounds.BottomRight - Bounds.TopLeft).y;
+            size = Constraint * (Bounds.BottomRight - Bounds.TopLeft).y;
         }
         else
         {
-            ProperSize = Constraint * (Bounds.BottomRight - Bounds.TopLeft);
+            size = Constraint * (Bounds.BottomRight - Bounds.TopLeft);
         }
     }
 
     Size::Size()
     {
-        this->ProperSize = Vec2();
-        this->SizeConstraints = Vec2();
+        this->size = Vec2();
+        this->constraints = Vec2();
         this->Bounds = BoundingRect();
     }
 
@@ -39,30 +39,30 @@ namespace akairo::Components
 
     void Size::Update()
     {
-        Vec2 Constraint = Vec2(this->SizeConstraints.x, this->SizeConstraints.y)/100.f;
+        Vec2 Constraint = Vec2(this->constraints.x, this->constraints.y)/100.f;
 
         if (WidthDependsOnHeight)
         {
-            ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft).y;
+            size = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft).y;
         }
         else
         {
-            ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft);
+            size = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft);
         }
     }
 
     void Size::Update(Vec2 Size)
     {
-        SizeConstraints = Size;
-        Vec2 Constraint = Vec2(this->SizeConstraints.x, this->SizeConstraints.y)/100.f;
+        constraints = Size;
+        Vec2 Constraint = Vec2(this->constraints.x, this->constraints.y)/100.f;
 
         if (WidthDependsOnHeight)
         {
-            ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft).y;
+            size = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft).y;
         }
         else
         {
-            ProperSize = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft);
+            size = Constraint * (this->Bounds.BottomRight - this->Bounds.TopLeft);
         }
     }
 }

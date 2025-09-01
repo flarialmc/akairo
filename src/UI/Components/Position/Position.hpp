@@ -11,9 +11,9 @@ class Position
     BoundingRect Parent;
 
 public:
-    Vec2 PositionConstraints; //Position Constraints (eg Vec2(50, 60) => 50% from left and 60% from top
-    Vec2 RelativePosition; //Position Relative to the Parent Rect (In Pixels)
-    Vec2 ProperPosition; //RelativePosition + ParentRect Position
+    Vec2 constraints; //Position Constraints (eg Vec2(50, 60) => 50% from left and 60% from top
+    Vec2 relativePosition; //Position Relative to the Parent Rect (In Pixels)
+    Vec2 position; //relativePosition + ParentRect Position
 
     explicit Position(Vec2 Position, BoundingRect ParentRect = {});
     Position();

@@ -5,20 +5,20 @@
 akairo::Components::Position::Position(Vec2 Position, BoundingRect ParentRect)
 {
 
-    PositionConstraints = Position;
+    constraints = Position;
 
-    Vec2 Constraint = Vec2(PositionConstraints.x, PositionConstraints.y)/100.f;
+    Vec2 Constraint = Vec2(constraints.x, constraints.y)/100.f;
 
-    RelativePosition = Constraint * (ParentRect.BottomRight - ParentRect.TopLeft);
+    relativePosition = Constraint * (ParentRect.BottomRight - ParentRect.TopLeft);
 
-    ProperPosition = Parent.TopLeft + RelativePosition;
+    position = Parent.TopLeft + relativePosition;
 }
 
 akairo::Components::Position::Position()
 {
-    this->RelativePosition = Vec2();
-    this->ProperPosition = Vec2();
-    this->RelativePosition = Vec2();
+    this->relativePosition = Vec2();
+    this->position = Vec2();
+    this->relativePosition = Vec2();
     this->Parent = BoundingRect();
 }
 
@@ -31,19 +31,19 @@ void akairo::Components::Position::Bind(BoundingRect ParentRect)
 
 void akairo::Components::Position::Update()
 {
-    Vec2 Constraint = Vec2(PositionConstraints.x, PositionConstraints.y)/100.f;
-    RelativePosition = Constraint * (Parent.BottomRight - Parent.TopLeft);
+    Vec2 Constraint = Vec2(constraints.x, constraints.y)/100.f;
+    relativePosition = Constraint * (Parent.BottomRight - Parent.TopLeft);
 
-    ProperPosition = Parent.TopLeft + RelativePosition;
+    position = Parent.TopLeft + relativePosition;
 }
 
 void akairo::Components::Position::Update(Vec2 Position)
 {
-    PositionConstraints = Position;
+    constraints = Position;
 
     Vec2 Constraint = Vec2(Position.x, Position.y)/100.f;
 
-    RelativePosition = Constraint * (Parent.BottomRight - Parent.TopLeft);
+    relativePosition = Constraint * (Parent.BottomRight - Parent.TopLeft);
 
-    ProperPosition = Parent.TopLeft + RelativePosition;
+    position = Parent.TopLeft + relativePosition;
 }

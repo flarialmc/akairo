@@ -45,7 +45,7 @@ namespace akairo::Renderer
                 extra();
                 for (const auto& element : elements | std::views::values)
                 {
-                    if (element->Visible) element->Draw();
+                    if (element->_visible) element->Draw();
                 }
 
                 ::ImGui::EndFrame();
@@ -62,10 +62,10 @@ namespace akairo::Renderer
 
     void ImGui::PushClipRect(const Components::Position& pos,
                              const Components::Size& size,
-                             bool intersect_with_current = true)
+                             bool intersect_with_current)
     {
-        ImVec2 min = pos.ProperPosition.getImVec2();
-        ImVec2 max = (pos.ProperPosition + size.ProperSize).getImVec2();
+        ImVec2 min = pos.position.getImVec2();
+        ImVec2 max = (pos.position + size.size).getImVec2();
 
         ::ImGui::GetBackgroundDrawList()->PushClipRect(min, max);
     }
@@ -79,8 +79,8 @@ namespace akairo::Renderer
                           const Components::Color color,
                           Components::Rounding rounding) const
 {
-    const ::ImVec2 p0 = pos.ProperPosition.getImVec2();
-    const ::ImVec2 sz = size.ProperSize.getImVec2();
+    const ::ImVec2 p0 = pos.position.getImVec2();
+    const ::ImVec2 sz = size.size.getImVec2();
 
     if (sz.x <= 0.0f || sz.y <= 0.0f)
         return;
@@ -91,10 +91,10 @@ namespace akairo::Renderer
     const float h = sz.y;
     const float rmax = ::ImMin(w, h) * 0.5f;
 
-    const float tl = ::ImMin(rounding.properRounding.x, rmax);
-    const float tr = ::ImMin(rounding.properRounding.y, rmax);
-    const float br = ::ImMin(rounding.properRounding.w, rmax);
-    const float bl = ::ImMin(rounding.properRounding.z, rmax);
+    const float tl = ::ImMin(rounding.rounding.x, rmax);
+    const float tr = ::ImMin(rounding.rounding.y, rmax);
+    const float br = ::ImMin(rounding.rounding.w, rmax);
+    const float bl = ::ImMin(rounding.rounding.z, rmax);
 
     ::ImDrawList* draw_list = ::ImGui::GetBackgroundDrawList();
     draw_list->PathClear();
@@ -143,8 +143,8 @@ namespace akairo::Renderer
     void ImGui::DrawHollowRectangle(Components::Position pos, Components::Size size, Components::Color color, float Width) const
     {
         ::ImGui::GetBackgroundDrawList()->AddRect(
-            pos.ProperPosition.getImVec2(),
-            size.ProperSize.getImVec2(),
+            pos.position.getImVec2(),
+            size.size.getImVec2(),
             color.toImColor(),
             0,
             240,
@@ -153,7 +153,7 @@ namespace akairo::Renderer
 
     void ImGui::DrawCircle(Components::Position pos, float radius, Components::Color color) const
     {
-        ::ImGui::GetBackgroundDrawList()->AddCircleFilled(pos.ProperPosition.getImVec2(), radius, color.toImColor());
+        ::ImGui::GetBackgroundDrawList()->AddCircleFilled(pos.position.getImVec2(), radius, color.toImColor());
     }
 
 }

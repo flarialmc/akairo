@@ -14,9 +14,7 @@ namespace akairo::Layouts
     : Element(std::move(name), renderer) {};
 
     Layer::~Layer()
-    {
-
-    }
+    = default;
 
     void Layer::Update()
     {

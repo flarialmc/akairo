@@ -29,9 +29,9 @@ namespace akairo::Layouts
     void FlexibleContainer::Draw()
     {
         this->_body->Draw();
-        if (_overflowBehavior == HIDDEN) Renderer::ImGui::PushClipRect(_body->com_position, _body->com_size, true);
-        for (auto element : this->children) element->Draw();
-        if (_overflowBehavior == HIDDEN) Renderer::ImGui::PopClipRect();
+        if (_overflowBehavior == HIDDEN) this->renderer->PushClipRect(_body->_position, _body->_size, true);
+        for (const auto& element : this->children) element->Draw();
+        if (_overflowBehavior == HIDDEN) this->renderer->PopClipRect();
 
     }
 
@@ -45,22 +45,21 @@ void FlexibleContainer::UpdateInternal(const Vec2& contentStart, const Vec2& con
 
     float rowHeight = 0.0f;
     float colWidth  = 0.0f;
-    bool didWrap = false;
 
     currentPos.x += _padding.x;
     currentPos.y += _padding.y;
 
     for (auto& child : this->children)
     {
-        child->com_position.Bind(childBounds);
-        child->com_size.Bind(childBounds);
-        child->com_size.Update();
+        child->_position.Bind(childBounds);
+        child->_size.Bind(childBounds);
+        child->_size.Update();
 
         if (auto rect = dynamic_cast<Shapes::Rectangle*>(child.get())) {
             rect->com_rounding.Update(rect->renderer->Height);
         }
 
-        Vec2 childSize = child->com_size.ProperSize;
+        Vec2 childSize = child->_size.size;
 
         // --- Flex layout positioning ---
         switch (_direction)
@@ -72,10 +71,8 @@ void FlexibleContainer::UpdateInternal(const Vec2& contentStart, const Vec2& con
                 {
                     currentPos.x = contentStart.x + _padding.x;
                     currentPos.y += rowHeight + _gap.y;
-                    rowHeight = 0.0f;
-                    didWrap = true;
-                }
-                child->com_position.ProperPosition = currentPos;
+                    rowHeight = 0.0f;}
+                child->_position.position = currentPos;
                 currentPos.x += childSize.x + _gap.x;
                 rowHeight = std::max(rowHeight, childSize.y);
                 break;
@@ -89,10 +86,9 @@ void FlexibleContainer::UpdateInternal(const Vec2& contentStart, const Vec2& con
                     currentPos.x = contentStart.x + contentSize.x - _padding.z;
                     currentPos.y += rowHeight + _gap.y;
                     rowHeight = 0.0f;
-                    didWrap = true;
                 }
                 currentPos.x -= childSize.x;
-                child->com_position.ProperPosition = currentPos;
+                child->_position.position = currentPos;
                 currentPos.x -= _gap.x;
                 rowHeight = std::max(rowHeight, childSize.y);
                 break;
@@ -106,9 +102,8 @@ void FlexibleContainer::UpdateInternal(const Vec2& contentStart, const Vec2& con
                     currentPos.y = contentStart.y + _padding.y;
                     currentPos.x += colWidth + _gap.x;
                     colWidth = 0.0f;
-                    didWrap = true;
                 }
-                child->com_position.ProperPosition = currentPos;
+                child->_position.position = currentPos;
                 currentPos.y += childSize.y + _gap.y;
                 colWidth = std::max(colWidth, childSize.x);
                 break;
@@ -122,18 +117,17 @@ void FlexibleContainer::UpdateInternal(const Vec2& contentStart, const Vec2& con
                     currentPos.y = contentStart.y + contentSize.y - _padding.w;
                     currentPos.x += colWidth + _gap.x;
                     colWidth = 0.0f;
-                    didWrap = true;
                 }
                 currentPos.y -= childSize.y;
-                child->com_position.ProperPosition = currentPos;
+                child->_position.position = currentPos;
                 currentPos.y -= _gap.y;
                 colWidth = std::max(colWidth, childSize.x);
                 break;
             }
         }
 
-        maxRight  = std::max(maxRight,  child->com_position.ProperPosition.x + childSize.x);
-        maxBottom = std::max(maxBottom, child->com_position.ProperPosition.y + childSize.y);
+        maxRight  = std::max(maxRight,  child->_position.position.x + childSize.x);
+        maxBottom = std::max(maxBottom, child->_position.position.y + childSize.y);
 
         for (auto& grandchild : child->children)
             grandchild->Update();
@@ -152,12 +146,12 @@ void FlexibleContainer::UpdateInternal(const Vec2& contentStart, const Vec2& con
         case VISIBLE:
         case SCROLL:
             // Do not enlarge container; keep original contentSize + padding
-            this->_body->com_size.ProperSize = contentSize + Vec2(_padding.x + _padding.z, _padding.y + _padding.w);
+            this->_body->_size.size = contentSize + Vec2(_padding.x + _padding.z, _padding.y + _padding.w);
             break;
 
         case ENLARGE:
             // Automatically resize container to fit children
-            this->_body->com_size.ProperSize = neededSize + Vec2(_padding.x + _padding.z, _padding.y + _padding.w);
+            this->_body->_size.size = neededSize + Vec2(_padding.x + _padding.z, _padding.y + _padding.w);
             break;
     }
 
@@ -168,20 +162,20 @@ void FlexibleContainer::UpdateInternal(const Vec2& contentStart, const Vec2& con
     void FlexibleContainer::Update(Vec2 newbounds)
     {
         BoundingRect ParentBounds(
-            this->com_position.ProperPosition,
-            this->com_position.ProperPosition + newbounds
+            this->_position.position,
+            this->_position.position + newbounds
         );
 
-        this->_body->com_position.Bind(ParentBounds);
-        this->_body->com_size.Bind(ParentBounds);
-        this->_body->com_position.Update();
-        this->_body->com_size.Update();
+        this->_body->_position.Bind(ParentBounds);
+        this->_body->_size.Bind(ParentBounds);
+        this->_body->_position.Update();
+        this->_body->_size.Update();
 
         if (auto rect = dynamic_cast<Shapes::Rectangle*>(this->_body.get()))
             rect->com_rounding.Update(rect->renderer->Height);
 
-        Vec2 contentStart = this->_body->com_position.ProperPosition + Vec2(_padding.x, _padding.y);
-        Vec2 contentSize  = this->_body->com_size.ProperSize - Vec2(_padding.x + _padding.z, _padding.y + _padding.w);
+        Vec2 contentStart = this->_body->_position.position + Vec2(_padding.x, _padding.y);
+        Vec2 contentSize  = this->_body->_size.size - Vec2(_padding.x + _padding.z, _padding.y + _padding.w);
 
         UpdateInternal(contentStart, contentSize);
     }
@@ -192,21 +186,21 @@ void FlexibleContainer::UpdateInternal(const Vec2& contentStart, const Vec2& con
         if (auto parent = this->parent.lock())
         {
             BoundingRect ParentBounds(
-                parent->com_position.ProperPosition,
-                parent->com_position.ProperPosition + parent->com_size.ProperSize
+                parent->_position.position,
+                parent->_position.position + parent->_size.size
             );
-            this->_body->com_position.Bind(ParentBounds);
-            this->_body->com_size.Bind(ParentBounds);
+            this->_body->_position.Bind(ParentBounds);
+            this->_body->_size.Bind(ParentBounds);
         }
 
-        this->_body->com_position.Update();
-        this->_body->com_size.Update();
+        this->_body->_position.Update();
+        this->_body->_size.Update();
 
         if (auto rect = dynamic_cast<Shapes::Rectangle*>(this->_body.get()))
             rect->com_rounding.Update(rect->renderer->Height);
 
-        Vec2 contentStart = this->_body->com_position.ProperPosition + Vec2(_padding.x, _padding.y);
-        Vec2 contentSize  = this->_body->com_size.ProperSize - Vec2(_padding.x + _padding.z, _padding.y + _padding.w);
+        Vec2 contentStart = this->_body->_position.position + Vec2(_padding.x, _padding.y);
+        Vec2 contentSize  = this->_body->_size.size - Vec2(_padding.x + _padding.z, _padding.y + _padding.w);
 
         UpdateInternal(contentStart, contentSize);
     }
